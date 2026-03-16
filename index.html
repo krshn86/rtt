@@ -1045,87 +1045,112 @@ const translations = {
 };
 
 // ===================== LANGUAGE ENGINE =====================
-let currentLang = 'en';
+var currentLang = (function() {
+  try { return localStorage.getItem('site-lang') || 'en'; } catch(e) { return 'en'; }
+})();
 
-function applyLanguage(lang) {
+function setLanguage(lang) {
+  if (!translations[lang]) return;
   currentLang = lang;
-  const t = translations[lang];
+  try { localStorage.setItem('site-lang', lang); } catch(e) {}
   document.documentElement.lang = lang;
+  var t = translations[lang];
 
-  document.querySelectorAll('[data-i18n]').forEach(el => {
-    const key = el.getAttribute('data-i18n');
-    if (t[key] !== undefined) {
-      el.innerHTML = t[key];
-    }
+  document.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t[key] !== undefined) el.innerHTML = t[key];
   });
 
-  // Update ALL lang buttons (nav + mobile drawer)
-  document.querySelectorAll('.lang-btn').forEach(btn => {
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
-  });
-
-  // Sync mobile nav link text
-  document.querySelectorAll('[data-mob-i18n]').forEach(el => {
-    const key = el.getAttribute('data-mob-i18n');
-    if (t[key]) el.textContent = t[key];
   });
 }
 
-// Event delegation on document — works for nav buttons AND dynamically created mobile buttons
-document.addEventListener('click', function(e) {
-  const btn = e.target.closest('.lang-btn');
-  if (btn && btn.dataset.lang) {
-    applyLanguage(btn.dataset.lang);
-  }
+function bindLangButtons() {
+  document.querySelectorAll('.lang-btn').forEach(function(btn) {
+    var fresh = btn.cloneNode(true);
+    btn.parentNode.replaceChild(fresh, btn);
+    fresh.addEventListener('click', function() {
+      setLanguage(this.getAttribute('data-lang'));
+    });
+  });
+}
+
+// ===================== NAV SCROLL =====================
+var nav = document.getElementById('nav');
+window.addEventListener('scroll', function() {
+  nav.classList.toggle('scrolled', window.scrollY > 20);
+}, { passive: true });
+
+// ===================== MOBILE NAV =====================
+var burger = document.getElementById('burger');
+var mobile = document.createElement('div');
+mobile.className = 'nav__mobile';
+mobile.innerHTML = [
+  '<button class="nav__mobile-close" id="mob-close"><i class="fa-solid fa-xmark"></i></button>',
+  '<a href="#about" class="mob-link">About RTT</a>',
+  '<a href="#help" class="mob-link">How I Help</a>',
+  '<a href="#process" class="mob-link">Process</a>',
+  '<a href="#meet" class="mob-link">About Me</a>',
+  '<a href="#pricing" class="mob-link">Pricing</a>',
+  '<a href="#testimonials" class="mob-link">Testimonials</a>',
+  '<a href="#faq" class="mob-link">FAQ</a>',
+  '<a href="#book" class="mob-link">Book a Session</a>',
+  '<div class="lang-switcher" style="margin-top:1.5rem">',
+  '  <button class="lang-btn" data-lang="en">EN</button>',
+  '  <span class="lang-sep">|</span>',
+  '  <button class="lang-btn" data-lang="fr">FR</button>',
+  '  <span class="lang-sep">|</span>',
+  '  <button class="lang-btn" data-lang="ro">RO</button>',
+  '</div>'
+].join('\n');
+document.body.appendChild(mobile);
+
+var closeMob = function() { mobile.classList.remove('open'); };
+burger.addEventListener('click', function() { mobile.classList.add('open'); });
+document.getElementById('mob-close').addEventListener('click', closeMob);
+mobile.querySelectorAll('.mob-link').forEach(function(l) {
+  l.addEventListener('click', closeMob);
 });
 
-// ===================== NAV =====================
-const nav = document.getElementById('nav');
-window.addEventListener('scroll', () => nav.classList.toggle('scrolled', scrollY > 20), {passive:true});
+// Bind all language buttons (nav + mobile) and apply saved language
+bindLangButtons();
+setLanguage(currentLang);
 
-const burger = document.getElementById('burger');
-const mobile = document.createElement('div');
-mobile.className = 'nav__mobile';
-mobile.innerHTML = `
-  <button class="nav__mobile-close" id="mob-close"><i class="fa-solid fa-xmark"></i></button>
-  <a href="#about" class="mob-link" data-mob-i18n="nav_about">About RTT</a>
-  <a href="#help" class="mob-link" data-mob-i18n="nav_help">How I Help</a>
-  <a href="#process" class="mob-link" data-mob-i18n="nav_process">Process</a>
-  <a href="#meet" class="mob-link" data-mob-i18n="nav_meet">About Me</a>
-  <a href="#pricing" class="mob-link" data-mob-i18n="nav_pricing">Pricing</a>
-  <a href="#testimonials" class="mob-link" data-mob-i18n="nav_testimonials">Testimonials</a>
-  <a href="#faq" class="mob-link" data-mob-i18n="nav_faq">FAQ</a>
-  <a href="#book" class="mob-link" data-mob-i18n="nav_cta">Book a Session</a>
-  <div class="lang-switcher" style="margin-top:1.5rem">
-    <button class="lang-btn active" data-lang="en">EN</button>
-    <span class="lang-sep">|</span>
-    <button class="lang-btn" data-lang="fr">FR</button>
-    <span class="lang-sep">|</span>
-    <button class="lang-btn" data-lang="ro">RO</button>
-  </div>`;
-document.body.appendChild(mobile);
-// Sync active state in mobile drawer with current language on first render
-applyLanguage(currentLang);
-
-const closeMob = () => mobile.classList.remove('open');
-burger.addEventListener('click', () => mobile.classList.add('open'));
-document.getElementById('mob-close').addEventListener('click', closeMob);
-mobile.querySelectorAll('.mob-link').forEach(l => l.addEventListener('click', closeMob));
+// Also sync mobile nav link text whenever language changes
+var origSetLanguage = setLanguage;
+setLanguage = function(lang) {
+  origSetLanguage(lang);
+  var t = translations[lang];
+  if (!t) return;
+  var mobileLinks = mobile.querySelectorAll('.mob-link');
+  var keys = ['nav_about','nav_help','nav_process','nav_meet','nav_pricing','nav_testimonials','nav_faq','nav_cta'];
+  mobileLinks.forEach(function(el, i) {
+    if (keys[i] && t[keys[i]]) el.textContent = t[keys[i]];
+  });
+};
+// Re-apply to update mobile link text
+setLanguage(currentLang);
 
 // ===================== REVEAL =====================
-const revealEls = document.querySelectorAll('.feature-card,.help-card,.step,.during-card,.testimonial,.pricing-card,.wherever__img,.wherever__text,.what-is__copy,.what-is__img,.meet__text,.meet__img,.faq-item');
-revealEls.forEach(el => el.classList.add('reveal'));
-revealEls.forEach(el => new IntersectionObserver((entries, obs) => {
-  entries.forEach((e, i) => {
-    if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 60); obs.unobserve(e.target); }
-  });
-}, {threshold: 0.1}).observe(el));
+var revealEls = document.querySelectorAll('.feature-card,.help-card,.step,.during-card,.testimonial,.pricing-card,.wherever__img,.wherever__text,.what-is__copy,.what-is__img,.meet__text,.meet__img,.faq-item');
+revealEls.forEach(function(el) { el.classList.add('reveal'); });
+revealEls.forEach(function(el) {
+  new IntersectionObserver(function(entries, obs) {
+    entries.forEach(function(e, i) {
+      if (e.isIntersecting) {
+        setTimeout(function() { e.target.classList.add('visible'); }, i * 60);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 }).observe(el);
+});
 
 // ===================== FAQ =====================
-document.querySelectorAll('.faq-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const isOpen = btn.getAttribute('aria-expanded') === 'true';
-    document.querySelectorAll('.faq-btn').forEach(b => {
+document.querySelectorAll('.faq-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var isOpen = btn.getAttribute('aria-expanded') === 'true';
+    document.querySelectorAll('.faq-btn').forEach(function(b) {
       b.setAttribute('aria-expanded', 'false');
       b.nextElementSibling.classList.remove('open');
     });
