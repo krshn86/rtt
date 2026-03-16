@@ -53,8 +53,9 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
 .nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
 .nav.scrolled{box-shadow:0 2px 20px rgba(0,0,0,.08)}
 .nav__inner{display:flex;align-items:center;gap:1.5rem;height:70px}
-.nav__logo{font-family:var(--font-serif);font-size:1.5rem;color:var(--charcoal);font-weight:500;margin-right:auto}
+.nav__logo{font-family:var(--font-serif);font-size:1.5rem;color:var(--charcoal);font-weight:500;margin-right:auto;display:flex;align-items:center}
 .nav__logo span{color:var(--sage)}
+.nav__logo-img{height:42px;width:auto;display:block}
 .nav__links{display:flex;gap:1.4rem}
 .nav__links a{font-size:.82rem;font-weight:500;color:var(--text);letter-spacing:.02em;transition:color .2s}
 .nav__links a:hover,.nav__links a.active{color:var(--sage)}
@@ -166,6 +167,9 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
 .footer .nav__logo{color:var(--white)}.footer .nav__logo span{color:var(--sage-light)}
 .footer__grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.5fr;gap:3rem;padding-bottom:3rem;border-bottom:1px solid rgba(255,255,255,.1)}
 .footer__brand p{font-size:.9rem;margin-top:1rem;line-height:1.7}
+.footer__logo-link{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;margin-bottom:1rem}
+.footer__logo-a5{height:52px;width:auto}
+.footer__logo-rtt{height:38px;width:auto}
 .footer__socials{display:flex;gap:.85rem;margin-top:1.5rem}
 .footer__socials a{width:38px;height:38px;border:1px solid rgba(255,255,255,.2);border-radius:50%;display:flex;align-items:center;justify-content:center;color:rgba(255,255,255,.7);font-size:.9rem;transition:all .2s}
 .footer__socials a:hover{background:var(--sage);border-color:var(--sage);color:var(--white)}
@@ -214,7 +218,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
 
 <nav class="nav" id="nav">
   <div class="nav__inner container">
-    <a href="#" class="nav__logo">Angela<span>.</span></a>
+    <a href="#" class="nav__logo"><img src="images/a5.png" alt="Angela" class="nav__logo-img" /></a>
     <ul class="nav__links">
       <li><a href="#about" data-i18n="nav_about">About RTT</a></li>
       <li><a href="#help" data-i18n="nav_help">How I Help</a></li>
@@ -634,8 +638,10 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
   <div class="container">
     <div class="footer__grid">
       <div class="footer__brand">
-        <a href="#" class="nav__logo">Angela<span>.</span></a>
-        <p data-i18n="footer_tagline">RTT Therapist &amp; Coach. Helping you find what's in the way — and change it. In French, English and Romanian.</p>
+        <a href="#" class="footer__logo-link">
+          <img src="images/a5.png" alt="Angela" class="footer__logo-a5" />
+          <img src="images/RTT.png" alt="RTT" class="footer__logo-rtt" />
+        </a>
         <div class="footer__socials">
           <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
           <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
@@ -1111,4 +1117,24 @@ const revealEls = document.querySelectorAll('.feature-card,.help-card,.step,.dur
 revealEls.forEach(el => el.classList.add('reveal'));
 revealEls.forEach(el => new IntersectionObserver((entries, obs) => {
   entries.forEach((e, i) => {
-    if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 60); obs.unobserve(e.tar
+    if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 60); obs.unobserve(e.target); }
+  });
+}, {threshold: 0.1}).observe(el));
+
+// ===================== FAQ =====================
+document.querySelectorAll('.faq-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    document.querySelectorAll('.faq-btn').forEach(b => {
+      b.setAttribute('aria-expanded', 'false');
+      b.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.setAttribute('aria-expanded', 'true');
+      btn.nextElementSibling.classList.add('open');
+    }
+  });
+});
+</script>
+</body>
+</html>
