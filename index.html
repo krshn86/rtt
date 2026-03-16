@@ -205,7 +205,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
   .pricing-grid{grid-template-columns:1fr}.pricing-card--featured{transform:none}
   .testimonials-grid{grid-template-columns:1fr}
   .footer__grid{grid-template-columns:1fr;gap:2rem}.footer__bottom{flex-direction:column;text-align:center}
-  .lang-switcher{display:none}
+  .nav .lang-switcher{display:none}
 }
 @media(max-width:480px){.features-grid{grid-template-columns:1fr}.help-grid{grid-template-columns:1fr}}
   </style>
@@ -224,6 +224,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
       <li><a href="#testimonials" data-i18n="nav_testimonials">Testimonials</a></li>
       <li><a href="#faq" data-i18n="nav_faq">FAQ</a></li>
     </ul>
+    <a href="#book" class="btn btn--nav" data-i18n="nav_cta">Book a Session</a>
     <div class="lang-switcher">
       <button class="lang-btn active" data-lang="en">EN</button>
       <span class="lang-sep">|</span>
@@ -231,7 +232,6 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
       <span class="lang-sep">|</span>
       <button class="lang-btn" data-lang="ro">RO</button>
     </div>
-    <a href="#book" class="btn btn--nav" data-i18n="nav_cta">Book a Session</a>
     <button class="nav__burger" id="burger"><span></span><span></span><span></span></button>
   </div>
 </nav>
@@ -946,7 +946,7 @@ const translations = {
 
     rtt_overline:"Descoperă",
     rtt_heading:"Ce este Terapia de Transformare Rapidă?",
-    rtt_intro:"Terapia de Transformare Rapidă (RTT) este o metodă unică, dezvoltată de hipnoterapeutul britanic Marissa Peer. Această metodă este cu siguranță „Rapidă" și „Transformațională", deoarece se obțin rezultate deosebite într-un timp scurt. Nu numai în cabinetul meu, ci în întreaga lume.",
+    rtt_intro:"Terapia de Transformare Rapidă (RTT) este o metodă unică, dezvoltată de hipnoterapeutul britanic Marisa Peer. Această metodă este cu siguranță „Rapidă" și „Transformațională", deoarece se obțin rezultate deosebite într-un timp scurt. Nu numai în cabinetul meu, ci în întreaga lume.",
     rtt_p1:"RTT vă poate economisi ore și, în majoritatea cazurilor, chiar ani de terapie prin vorbire și coaching. Prin hipnoză învățați să lucrați cu subconștientul și să detectați blocajele vechi. În felul acesta puteți curăța și transforma ceea ce nu vă mai ajută. Veți experimenta mai multă liniște, putere, energie și spațiu, în fiecare aspect al vieții.",
     rtt_p2:"RTT vă deschide orizontul — și, în același timp, se deschid căi noi. Faceți noi alegeri despre care sunteți convins că sunt cele corecte. Cine vreți să fiți? RTT vă oferă libertatea de a alege.",
     rtt_p3:"Această terapie autonomă revoluționară, extrem de eficientă, se potrivește perfect pentru stilul nostru de viață rapid în lumea aflată în schimbare constantă. Îmbunătățește, transformă și optimizează calitatea vieții pentru persoanele care nu au timp să petreacă ore întregi vorbind despre problemele lor.",
@@ -1098,6 +1098,8 @@ mobile.innerHTML = `
     <button class="lang-btn" data-lang="ro">RO</button>
   </div>`;
 document.body.appendChild(mobile);
+// Sync active state in mobile drawer with current language on first render
+applyLanguage(currentLang);
 
 const closeMob = () => mobile.classList.remove('open');
 burger.addEventListener('click', () => mobile.classList.add('open'));
