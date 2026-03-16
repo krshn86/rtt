@@ -200,6 +200,24 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
 .footer__bottom{padding-block:1.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
 .footer__bottom p{font-size:.8rem;color:rgba(255,255,255,.4);margin:0}
 
+/* LEGAL MODALS */
+.legal-modal{display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,0,.55);backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);align-items:flex-start;justify-content:center;padding:1.5rem;overflow-y:auto}
+.legal-modal.open{display:flex}
+.legal-modal__box{background:var(--white);border-radius:var(--radius);max-width:680px;width:100%;margin:auto;display:flex;flex-direction:column;box-shadow:0 24px 80px rgba(0,0,0,.22)}
+.legal-modal__head{display:flex;align-items:center;justify-content:space-between;padding:1.25rem 1.75rem;border-bottom:1px solid var(--border);flex-shrink:0;position:sticky;top:0;background:var(--white);border-radius:var(--radius) var(--radius) 0 0;z-index:1}
+.legal-modal__head h3{font-size:1.05rem;margin:0;color:var(--charcoal)}
+.legal-modal__close{background:none;border:none;cursor:pointer;color:var(--charcoal);font-size:1.4rem;line-height:1;padding:.25rem .5rem;border-radius:4px;transition:color .2s,background .2s}
+.legal-modal__close:hover{background:#f0f6f2;color:var(--sage)}
+.legal-modal__body{padding:1.75rem}
+.legal-modal__body h4{font-size:.8rem;color:var(--sage);margin:1.4rem 0 .4rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+.legal-modal__body h4:first-child{margin-top:0}
+.legal-modal__body p{font-size:.88rem;line-height:1.75;margin-bottom:.85rem;color:var(--text)}
+.legal-modal__body ul{padding-left:1.25rem;margin-bottom:.85rem}
+.legal-modal__body ul li{font-size:.88rem;line-height:1.7;color:var(--text);margin-bottom:.25rem}
+.legal-modal__lang{display:none}
+.legal-modal__lang.active{display:block}
+@media(max-width:600px){.legal-modal{padding:.75rem}.legal-modal__body{padding:1.25rem}}
+
 /* REVEAL */
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .reveal.visible{opacity:1;transform:translateY(0)}
@@ -809,9 +827,9 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
         <h5 data-i18n="footer_support">Support</h5>
         <ul>
           <li><a href="#faq" data-i18n="nav_faq">FAQs</a></li>
-          <li><a href="#" data-i18n="footer_privacy">Privacy Policy</a></li>
-          <li><a href="#" data-i18n="footer_terms">Terms &amp; Conditions</a></li>
-          <li><a href="#" data-i18n="footer_disclaimer">Disclaimer</a></li>
+          <li><a href="#" data-modal="privacy" data-i18n="footer_privacy">Privacy Policy</a></li>
+          <li><a href="#" data-modal="terms" data-i18n="footer_terms">Terms &amp; Conditions</a></li>
+          <li><a href="#" data-modal="disclaimer" data-i18n="footer_disclaimer">Disclaimer</a></li>
         </ul>
       </div>
       <div class="footer__contact">
@@ -826,6 +844,248 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
     </div>
   </div>
 </footer>
+
+<!-- ===================== LEGAL MODALS ===================== -->
+
+<!-- TERMS & CONDITIONS -->
+<div class="legal-modal" id="modal-terms" role="dialog" aria-modal="true" aria-labelledby="modal-terms-title">
+  <div class="legal-modal__box">
+    <div class="legal-modal__head">
+      <h3 id="modal-terms-title" data-i18n="footer_terms">Terms &amp; Conditions</h3>
+      <button class="legal-modal__close" data-modal-close aria-label="Close">&times;</button>
+    </div>
+    <div class="legal-modal__body">
+
+      <div class="legal-modal__lang" data-lang="en">
+        <h4>1. Service Description</h4>
+        <p>AtDriveYourMind offers Rapid Transformational Therapy (RTT) sessions and coaching services delivered by Angela Tudor, a certified RTT Practitioner and Member of the RTT Alumni Association. Sessions are conducted online (via Zoom or similar) or in person, as agreed.</p>
+        <h4>2. Booking &amp; Payment</h4>
+        <p>Sessions are confirmed upon receipt of full payment. Prices are as published on the website and are subject to change with notice. Payment must be completed before each session unless a package has been purchased.</p>
+        <h4>3. Cancellation Policy</h4>
+        <p>Cancellations made more than 48 hours before a scheduled session may be rescheduled once at no charge. Cancellations within 48 hours or no-shows may be charged in full. AtDriveYourMind reserves the right to reschedule appointments in exceptional circumstances.</p>
+        <h4>4. Session Recordings</h4>
+        <p>RTT sessions typically include a personalised transformational recording for the exclusive use of the client. This recording may not be shared, reproduced, or distributed without prior written consent.</p>
+        <h4>5. Confidentiality</h4>
+        <p>All information shared during sessions is kept strictly confidential in accordance with applicable data protection laws. Exceptions apply only where there is a serious risk of harm to you or others, or where legally required.</p>
+        <h4>6. Intellectual Property</h4>
+        <p>All content, materials, and recordings provided by AtDriveYourMind remain the intellectual property of Angela Tudor / AtDriveYourMind unless otherwise agreed in writing.</p>
+        <h4>7. Governing Law</h4>
+        <p>These terms are governed by applicable law. Any disputes will be handled in good faith.</p>
+        <h4>8. Amendments</h4>
+        <p>AtDriveYourMind reserves the right to update these Terms &amp; Conditions at any time. Continued use of the services constitutes acceptance of any changes.</p>
+      </div>
+
+      <div class="legal-modal__lang" data-lang="fr">
+        <h4>1. Description des services</h4>
+        <p>AtDriveYourMind propose des séances de Rapid Transformational Therapy (RTT) et des services de coaching dispensés par Angela Tudor, praticienne RTT certifiée et membre de l'Association Alumni RTT. Les séances sont réalisées en ligne (via Zoom ou similaire) ou en personne, selon accord.</p>
+        <h4>2. Réservation et paiement</h4>
+        <p>Les séances sont confirmées à réception du paiement intégral. Les tarifs sont tels qu'ils figurent sur le site web et sont susceptibles d'être modifiés avec préavis. Le paiement doit être effectué avant chaque séance, sauf si un forfait a été acheté.</p>
+        <h4>3. Politique d'annulation</h4>
+        <p>Les annulations effectuées plus de 48 heures avant une séance prévue peuvent être reportées une fois sans frais. Les annulations dans les 48 heures ou les absences peuvent être facturées intégralement. AtDriveYourMind se réserve le droit de reporter des rendez-vous dans des circonstances exceptionnelles.</p>
+        <h4>4. Enregistrements de séances</h4>
+        <p>Les séances RTT comprennent généralement un enregistrement transformationnel personnalisé à l'usage exclusif du client. Cet enregistrement ne peut être partagé, reproduit ou distribué sans consentement écrit préalable.</p>
+        <h4>5. Confidentialité</h4>
+        <p>Toutes les informations partagées lors des séances sont strictement confidentielles, conformément aux lois applicables sur la protection des données. Des exceptions s'appliquent uniquement en cas de risque sérieux pour vous ou autrui, ou lorsque la loi l'exige.</p>
+        <h4>6. Propriété intellectuelle</h4>
+        <p>Tout le contenu, les supports et les enregistrements fournis par AtDriveYourMind restent la propriété intellectuelle d'Angela Tudor / AtDriveYourMind, sauf accord écrit contraire.</p>
+        <h4>7. Droit applicable</h4>
+        <p>Ces conditions sont régies par le droit applicable. Tout litige sera traité de bonne foi.</p>
+        <h4>8. Modifications</h4>
+        <p>AtDriveYourMind se réserve le droit de mettre à jour ces Conditions générales à tout moment. La poursuite de l'utilisation des services constitue l'acceptation de toute modification.</p>
+      </div>
+
+      <div class="legal-modal__lang" data-lang="ro">
+        <h4>1. Descrierea serviciilor</h4>
+        <p>AtDriveYourMind oferă sesiuni de Rapid Transformational Therapy (RTT) și servicii de coaching furnizate de Angela Tudor, practicant RTT certificat și membră a Asociației Alumni RTT. Sesiunile se desfășoară online (prin Zoom sau similar) sau în persoană, conform acordului.</p>
+        <h4>2. Rezervare și plată</h4>
+        <p>Sesiunile sunt confirmate la primirea plății integrale. Prețurile sunt cele publicate pe site și pot fi modificate cu preaviz. Plata trebuie efectuată înainte de fiecare sesiune, cu excepția cazului în care a fost achiziționat un pachet.</p>
+        <h4>3. Politica de anulare</h4>
+        <p>Anulările efectuate cu mai mult de 48 de ore înainte de o sesiune programată pot fi reprogramate o dată fără costuri suplimentare. Anulările în mai puțin de 48 de ore sau absențele pot fi facturate integral. AtDriveYourMind își rezervă dreptul de a reprograma programările în circumstanțe excepționale.</p>
+        <h4>4. Înregistrările sesiunilor</h4>
+        <p>Sesiunile RTT includ de obicei o înregistrare transformațională personalizată pentru uzul exclusiv al clientului. Aceasta nu poate fi împărtășită, reprodusă sau distribuită fără consimțământul scris prealabil.</p>
+        <h4>5. Confidențialitate</h4>
+        <p>Toate informațiile împărtășite în timpul sesiunilor sunt păstrate strict confidențiale, în conformitate cu legile aplicabile privind protecția datelor. Excepțiile se aplică numai în cazul unui risc serios de vătămare sau unde legea o impune.</p>
+        <h4>6. Proprietate intelectuală</h4>
+        <p>Tot conținutul, materialele și înregistrările furnizate de AtDriveYourMind rămân proprietatea intelectuală a Angelei Tudor / AtDriveYourMind, cu excepția cazului în care se convine altfel în scris.</p>
+        <h4>7. Lege aplicabilă</h4>
+        <p>Acești termeni sunt guvernați de legea aplicabilă. Orice dispute vor fi soluționate cu bună-credință.</p>
+        <h4>8. Modificări</h4>
+        <p>AtDriveYourMind își rezervă dreptul de a actualiza acești Termeni și Condiții în orice moment. Continuarea utilizării serviciilor constituie acceptarea oricăror modificări.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- DISCLAIMER -->
+<div class="legal-modal" id="modal-disclaimer" role="dialog" aria-modal="true" aria-labelledby="modal-disclaimer-title">
+  <div class="legal-modal__box">
+    <div class="legal-modal__head">
+      <h3 id="modal-disclaimer-title" data-i18n="footer_disclaimer">Disclaimer</h3>
+      <button class="legal-modal__close" data-modal-close aria-label="Close">&times;</button>
+    </div>
+    <div class="legal-modal__body">
+
+      <div class="legal-modal__lang" data-lang="en">
+        <h4>Complementary Therapy</h4>
+        <p>Rapid Transformational Therapy (RTT) is a complementary therapy and is not a substitute for professional medical or psychological treatment. The services provided by AtDriveYourMind are intended to support personal growth, emotional wellbeing, and positive behaviour change.</p>
+        <h4>Not Medical Advice</h4>
+        <p>Nothing on this website or discussed in sessions constitutes medical, psychological, psychiatric, or legal advice. Always consult a qualified healthcare professional for medical concerns, mental health conditions, or before making changes to any treatment plan.</p>
+        <h4>Individual Results</h4>
+        <p>Results vary between individuals. No specific outcomes are guaranteed. Testimonials and case studies shared on this website reflect individual experiences and may not represent typical results.</p>
+        <h4>Emergency Situations</h4>
+        <p>If you are in crisis or experiencing a mental health emergency, please contact your local emergency services or a mental health crisis line immediately. RTT sessions are not suitable as a crisis intervention.</p>
+        <h4>Third-Party Links</h4>
+        <p>This website may contain links to third-party websites. AtDriveYourMind is not responsible for the content or privacy practices of those sites.</p>
+        <h4>Limitation of Liability</h4>
+        <p>To the extent permitted by law, AtDriveYourMind shall not be liable for any direct, indirect, incidental, or consequential damages arising from the use of this website or the services offered.</p>
+      </div>
+
+      <div class="legal-modal__lang" data-lang="fr">
+        <h4>Thérapie complémentaire</h4>
+        <p>La Rapid Transformational Therapy (RTT) est une thérapie complémentaire et ne remplace pas un traitement médical ou psychologique professionnel. Les services fournis par AtDriveYourMind visent à soutenir la croissance personnelle, le bien-être émotionnel et le changement comportemental positif.</p>
+        <h4>Pas de conseil médical</h4>
+        <p>Rien sur ce site web ni lors des séances ne constitue un conseil médical, psychologique, psychiatrique ou juridique. Consultez toujours un professionnel de santé qualifié pour toute préoccupation médicale, tout problème de santé mentale, ou avant d'apporter des modifications à un plan de traitement.</p>
+        <h4>Résultats individuels</h4>
+        <p>Les résultats varient d'un individu à l'autre. Aucun résultat spécifique n'est garanti. Les témoignages et études de cas partagés sur ce site reflètent des expériences individuelles et peuvent ne pas représenter les résultats typiques.</p>
+        <h4>Situations d'urgence</h4>
+        <p>Si vous êtes en crise ou vivez une urgence de santé mentale, veuillez contacter immédiatement les services d'urgence locaux ou une ligne d'assistance en santé mentale. Les séances RTT ne conviennent pas comme intervention de crise.</p>
+        <h4>Liens tiers</h4>
+        <p>Ce site web peut contenir des liens vers des sites tiers. AtDriveYourMind n'est pas responsable du contenu ni des pratiques de confidentialité de ces sites.</p>
+        <h4>Limitation de responsabilité</h4>
+        <p>Dans la mesure permise par la loi, AtDriveYourMind ne saurait être tenu responsable de tout dommage direct, indirect, accessoire ou consécutif résultant de l'utilisation de ce site web ou des services proposés.</p>
+      </div>
+
+      <div class="legal-modal__lang" data-lang="ro">
+        <h4>Terapie complementară</h4>
+        <p>Rapid Transformational Therapy (RTT) este o terapie complementară și nu înlocuiește tratamentul medical sau psihologic profesional. Serviciile oferite de AtDriveYourMind sunt destinate să sprijine creșterea personală, bunăstarea emoțională și schimbarea comportamentală pozitivă.</p>
+        <h4>Nu constituie sfat medical</h4>
+        <p>Nimic de pe acest site web sau discutat în sesiuni nu constituie sfat medical, psihologic, psihiatric sau juridic. Consultați întotdeauna un profesionist medical calificat pentru probleme medicale, afecțiuni de sănătate mintală sau înainte de a face modificări la orice plan de tratament.</p>
+        <h4>Rezultate individuale</h4>
+        <p>Rezultatele variază între indivizi. Nu se garantează rezultate specifice. Mărturiile și studiile de caz împărtășite pe acest site reflectă experiențe individuale și este posibil să nu reprezinte rezultate tipice.</p>
+        <h4>Situații de urgență</h4>
+        <p>Dacă vă aflați în criză sau trăiți o urgență de sănătate mintală, vă rugăm să contactați imediat serviciile de urgență locale sau o linie de criză pentru sănătate mintală. Sesiunile RTT nu sunt potrivite ca intervenție de criză.</p>
+        <h4>Link-uri terțe</h4>
+        <p>Acest site web poate conține link-uri către site-uri web ale terților. AtDriveYourMind nu este responsabil pentru conținutul sau practicile de confidențialitate ale acelor site-uri.</p>
+        <h4>Limitarea răspunderii</h4>
+        <p>În măsura permisă de lege, AtDriveYourMind nu va fi răspunzătoare pentru niciun prejudiciu direct, indirect, incidental sau consecvent rezultat din utilizarea acestui site web sau a serviciilor oferite.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- PRIVACY POLICY / GDPR -->
+<div class="legal-modal" id="modal-privacy" role="dialog" aria-modal="true" aria-labelledby="modal-privacy-title">
+  <div class="legal-modal__box">
+    <div class="legal-modal__head">
+      <h3 id="modal-privacy-title" data-i18n="footer_privacy">Privacy Policy</h3>
+      <button class="legal-modal__close" data-modal-close aria-label="Close">&times;</button>
+    </div>
+    <div class="legal-modal__body">
+
+      <div class="legal-modal__lang" data-lang="en">
+        <h4>Privacy &amp; GDPR</h4>
+        <p>Your privacy is important to us. This privacy statement explains which personal data we process and how we handle it. AtDriveYourMind processes personal data about you because you use our services and/or because you provide it to us yourself.</p>
+        <h4>Data We Collect</h4>
+        <ul>
+          <li>IP address &amp; internet browser / device type</li>
+          <li>Data about your surfing behaviour on this website</li>
+          <li>First and last name, e-mail address, phone number, address, date of birth, sex</li>
+          <li>Other personal data you actively provide (correspondence, profile creation, telephone)</li>
+        </ul>
+        <h4>Special &amp; Sensitive Data</h4>
+        <p>Our website does not intend to collect data about visitors younger than 16 years old without parental or guardian permission. If you believe we have inadvertently collected data from a minor, please contact us at <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a> and we will delete it.</p>
+        <h4>Why We Need Your Data</h4>
+        <ul>
+          <li>Processing your payment</li>
+          <li>Sending our newsletter and/or advertising materials (with your consent)</li>
+          <li>Contacting you to deliver our services</li>
+          <li>Informing you about changes to our services</li>
+          <li>Improving our website and tailoring our services to your preferences</li>
+          <li>Complying with legal obligations (e.g. tax returns)</li>
+        </ul>
+        <h4>Data Retention</h4>
+        <p>We will not keep your personal data longer than strictly necessary to fulfil the purposes for which it was collected.</p>
+        <h4>Sharing Your Data</h4>
+        <p>AtDriveYourMind does not sell your data to third parties. Data is shared only where necessary for the execution of our agreement with you or to comply with a legal obligation. We conclude processor agreements with any companies that handle your data on our behalf.</p>
+        <h4>Cookies</h4>
+        <p>We use functional, analytical, and tracking cookies. On your first visit you were informed about these cookies and asked for your consent. You may opt out by adjusting your browser settings. Third-party cookies (e.g. from advertisers or social media) may also be placed on this site.</p>
+        <h4>Your Rights</h4>
+        <p>You have the right to view, correct, or delete your personal data. Send your request to <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a> with a copy of your ID (please black out your photo and citizen service number). We will respond within four weeks.</p>
+        <h4>Security</h4>
+        <p>AtDriveYourMind takes appropriate measures to prevent misuse, loss, unauthorised access, unwanted disclosure, and unauthorised modification of your data. Concerns? Contact us at <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a>.</p>
+      </div>
+
+      <div class="legal-modal__lang" data-lang="fr">
+        <h4>Confidentialité &amp; RGPD</h4>
+        <p>Votre vie privée est importante pour nous. Cette déclaration de confidentialité explique quelles données personnelles nous traitons et comment nous les gérons. AtDriveYourMind traite des données personnelles vous concernant parce que vous utilisez nos services et/ou parce que vous nous les fournissez vous-même.</p>
+        <h4>Données collectées</h4>
+        <ul>
+          <li>Adresse IP, navigateur Internet et type d'appareil</li>
+          <li>Données sur votre comportement de navigation sur ce site</li>
+          <li>Nom, prénom, adresse e-mail, numéro de téléphone, adresse, date de naissance, sexe</li>
+          <li>Autres données que vous fournissez activement (correspondance, création de profil, téléphone)</li>
+        </ul>
+        <h4>Données spéciales et sensibles</h4>
+        <p>Notre site n'a pas l'intention de collecter des données sur des visiteurs âgés de moins de 16 ans sans permission parentale. Si vous pensez que nous avons inadvertance collecté des données d'un mineur, contactez-nous à <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a>.</p>
+        <h4>Pourquoi nous avons besoin de vos données</h4>
+        <ul>
+          <li>Traitement de votre paiement</li>
+          <li>Envoi de notre newsletter et/ou de brochures publicitaires (avec votre consentement)</li>
+          <li>Vous contacter pour fournir nos services</li>
+          <li>Vous informer des modifications de nos services</li>
+          <li>Améliorer notre site et adapter nos services à vos préférences</li>
+          <li>Respecter nos obligations légales</li>
+        </ul>
+        <h4>Conservation des données</h4>
+        <p>Nous ne conservons vos données personnelles que le temps strictement nécessaire à la réalisation des finalités pour lesquelles elles ont été collectées.</p>
+        <h4>Partage des données</h4>
+        <p>AtDriveYourMind ne vend pas vos données à des tiers. Les données sont partagées uniquement si nécessaire pour l'exécution de notre accord avec vous ou pour respecter une obligation légale. Nous concluons des accords de sous-traitance avec toute entreprise traitant vos données en notre nom.</p>
+        <h4>Cookies</h4>
+        <p>Nous utilisons des cookies fonctionnels, analytiques et de suivi. Lors de votre première visite, vous avez été informé et avez donné votre consentement. Vous pouvez vous désabonner via les paramètres de votre navigateur. Des cookies tiers peuvent également être placés sur ce site.</p>
+        <h4>Vos droits</h4>
+        <p>Vous avez le droit de consulter, corriger ou supprimer vos données personnelles. Envoyez votre demande à <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a> avec une copie de votre pièce d'identité (masquez votre photo et votre numéro de service citoyen). Nous répondrons dans un délai de quatre semaines.</p>
+        <h4>Sécurité</h4>
+        <p>AtDriveYourMind applique des mesures appropriées pour empêcher l'utilisation abusive, la perte, l'accès non autorisé et la modification non autorisée de vos données. Des questions ? Contactez-nous à <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a>.</p>
+      </div>
+
+      <div class="legal-modal__lang" data-lang="ro">
+        <h4>Confidențialitate &amp; GDPR</h4>
+        <p>Confidențialitatea datelor este importantă pentru noi. Această declarație de confidențialitate explică ce date cu caracter personal procesăm și cum le gestionăm. AtDriveYourMind prelucrează date cu caracter personal despre dumneavoastră deoarece utilizați serviciile noastre și/sau pentru că ni le furnizați singur.</p>
+        <h4>Date pe care le colectăm</h4>
+        <ul>
+          <li>Adresă IP, browser de internet și tip de dispozitiv</li>
+          <li>Date despre comportamentul dumneavoastră de navigare pe site</li>
+          <li>Nume, prenume, adresă e-mail, număr de telefon, adresă poștală, dată de naștere, sex</li>
+          <li>Alte date furnizate activ (corespondență, creare profil, telefon)</li>
+        </ul>
+        <h4>Date speciale și sensibile</h4>
+        <p>Site-ul nostru nu intenționează să colecteze date despre vizitatorii sub 16 ani fără permisiunea părintească. Dacă credeți că am colectat date de la un minor, contactați-ne la <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a> și vom șterge informațiile.</p>
+        <h4>De ce avem nevoie de datele dumneavoastră</h4>
+        <ul>
+          <li>Gestionarea plății dumneavoastră</li>
+          <li>Trimiterea newsletter-ului și/sau a broșurilor publicitare (cu consimțământul dumneavoastră)</li>
+          <li>Contactarea dumneavoastră pentru furnizarea serviciilor</li>
+          <li>Informarea cu privire la modificările serviciilor noastre</li>
+          <li>Îmbunătățirea site-ului și adaptarea serviciilor la preferințele dumneavoastră</li>
+          <li>Respectarea obligațiilor legale</li>
+        </ul>
+        <h4>Retenția datelor</h4>
+        <p>Nu vom păstra datele dumneavoastră cu caracter personal mai mult decât este strict necesar pentru a realiza scopurile colectării.</p>
+        <h4>Distribuirea datelor</h4>
+        <p>AtDriveYourMind nu vinde datele dumneavoastră către terți. Datele sunt partajate numai dacă este necesar pentru executarea acordului cu dumneavoastră sau pentru a respecta o obligație legală. Încheiem acorduri de procesare cu orice companie care gestionează datele în numele nostru.</p>
+        <h4>Cookie-uri</h4>
+        <p>Folosim cookie-uri funcționale, analitice și de urmărire. La prima vizită ați fost informat și ați acordat consimțământul. Puteți renunța prin setările browserului. Cookie-uri terțe pot fi plasate și de alte companii.</p>
+        <h4>Drepturile dumneavoastră</h4>
+        <p>Aveți dreptul de a vizualiza, corecta sau șterge datele cu caracter personal. Trimiteți solicitarea la <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a> cu o copie a actului de identitate (mascați fotografia și CNP-ul). Vom răspunde în termen de patru săptămâni.</p>
+        <h4>Securitate</h4>
+        <p>AtDriveYourMind aplică măsuri adecvate pentru a preveni utilizarea greșită, pierderea, accesul neautorizat și modificarea neautorizată a datelor. Nelămuriri? Contactați-ne la <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a>.</p>
+      </div>
+
+    </div>
+  </div>
+</div>
 
 <!-- FLOATING CTA (mobile only) -->
 <a href="https://calendly.com/angela-tudor" target="_blank" rel="noopener noreferrer" id="mob-fab" class="mob-fab" aria-label="Book a Session">
@@ -1209,12 +1469,55 @@ function setLanguage(lang) {
   document.querySelectorAll('.lang-btn').forEach(function(btn) {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
   });
+  updateModalLang(lang);
 }
 
 // Single event delegation — works for ALL lang buttons everywhere, always
 document.addEventListener('click', function(e) {
   var btn = e.target.closest('.lang-btn');
   if (btn) setLanguage(btn.getAttribute('data-lang'));
+});
+
+// ===================== LEGAL MODALS =====================
+function updateModalLang(lang) {
+  document.querySelectorAll('.legal-modal.open .legal-modal__lang').forEach(function(div) {
+    div.classList.toggle('active', div.getAttribute('data-lang') === lang);
+  });
+}
+
+function openLegalModal(id) {
+  var modal = document.getElementById('modal-' + id);
+  if (!modal) return;
+  modal.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  modal.querySelectorAll('.legal-modal__lang').forEach(function(div) {
+    div.classList.toggle('active', div.getAttribute('data-lang') === currentLang);
+  });
+  // Update heading text via i18n
+  var t = translations[currentLang];
+  modal.querySelectorAll('[data-i18n]').forEach(function(el) {
+    var key = el.getAttribute('data-i18n');
+    if (t && t[key] !== undefined) el.innerHTML = t[key];
+  });
+}
+
+function closeLegalModal(modal) {
+  modal.classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('click', function(e) {
+  var trigger = e.target.closest('[data-modal]');
+  if (trigger) { e.preventDefault(); openLegalModal(trigger.getAttribute('data-modal')); return; }
+  var closeBtn = e.target.closest('[data-modal-close]');
+  if (closeBtn) { closeLegalModal(closeBtn.closest('.legal-modal')); return; }
+  if (e.target.classList.contains('legal-modal')) closeLegalModal(e.target);
+});
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.legal-modal.open').forEach(closeLegalModal);
+  }
 });
 
 // ===================== NAV SCROLL =====================
