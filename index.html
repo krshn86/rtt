@@ -8,6 +8,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
   <style>
 :root{--sage:#4a7c65;--sage-light:#6b9e86;--sage-dark:#2f5244;--sage-pale:#eaf2ee;--cream:#faf9f7;--off-white:#f4f2ee;--charcoal:#1e2822;--text:#3a3a3a;--text-muted:#7a7a7a;--white:#ffffff;--border:#dde8e2;--font-serif:'Cormorant Garamond',Georgia,serif;--font-sans:'Inter',system-ui,sans-serif;--radius:12px;--radius-sm:6px;--shadow:0 4px 24px rgba(0,0,0,.07);--shadow-md:0 8px 40px rgba(0,0,0,.12);--max-w:1140px;--pad:clamp(1rem,5vw,2rem)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -1346,6 +1347,21 @@ if (processSteps) {
     }
   }, { threshold: 0.35 }).observe(processSteps);
 }
+</script>
+
+<!-- Calendly popup widget -->
+<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
+// Intercept all Calendly booking buttons and open the popup instead of a new tab.
+// Falls back to normal link behaviour if the widget script hasn't loaded yet.
+document.addEventListener('click', function(e) {
+  var link = e.target.closest('a[href="https://calendly.com/angela-tudor"]');
+  if (!link) return;
+  if (window.Calendly && typeof Calendly.initPopupWidget === 'function') {
+    e.preventDefault();
+    Calendly.initPopupWidget({ url: 'https://calendly.com/angela-tudor' });
+  }
+});
 </script>
 </body>
 </html>
