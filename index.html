@@ -133,7 +133,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
 .meet__text h2{margin-bottom:1.25rem}.meet__text p{font-size:.97rem}
 
 /* PRICING */
-.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem;align-items:start}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.75rem;align-items:stretch}
 .pricing-card{background:var(--white);border-radius:var(--radius);padding:2.25rem 2rem;border:1px solid var(--border);position:relative;transition:transform .25s,box-shadow .25s;display:flex;flex-direction:column}
 .pricing-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-md)}
 .pricing-card--featured{border-color:var(--sage);box-shadow:0 0 0 2px var(--sage),var(--shadow-md);transform:translateY(-8px)}
@@ -268,12 +268,12 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
   .testimonials-grid{display:grid!important;grid-template-columns:1fr;gap:.75rem}
   .testimonials-grid .testimonial{min-width:0}
   /* Pricing — keep snap-scroll carousel; fix badge clip with padding-top; reduce card padding */
-  .pricing-grid{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-top:1.5rem;padding-bottom:1rem;scrollbar-width:none;align-items:flex-start}
+  .pricing-grid{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-top:1.5rem;padding-bottom:1rem;scrollbar-width:none;align-items:stretch}
   .pricing-grid::-webkit-scrollbar{display:none}
   .pricing-grid .pricing-card{min-width:min(300px,82vw);scroll-snap-align:center;flex-shrink:0;transform:none!important;padding:1.25rem 1rem}
   .pricing-card--featured{box-shadow:0 0 0 2px var(--sage),var(--shadow-md)}
   /* About photo — circular avatar crop so Angela's face is clearly visible */
-  .meet__img{border-radius:50%!important;width:180px!important;height:180px!important;overflow:hidden!important;margin:0 auto 1.5rem!important}
+  .meet__img{border-radius:50%!important;width:240px!important;height:240px!important;overflow:hidden!important;margin:0 auto 1.5rem!important}
   .meet__img img{width:100%!important;height:100%!important;object-fit:cover!important;object-position:center 15%!important;border-radius:50%!important;box-shadow:0 4px 20px rgba(74,124,101,.25)!important}
 }
 @media(max-width:480px){
