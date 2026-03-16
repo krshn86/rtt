@@ -242,6 +242,101 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
   .feature-card p{grid-column:2;grid-row:2;margin-bottom:0}
   h1{font-size:clamp(1.9rem,8.5vw,2.6rem)}
 }
+
+/* =====================================================
+   MICRO-ANIMATIONS
+   ===================================================== */
+
+/* — Keyframes — */
+@keyframes fadeInUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInLeft{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(1.06)}to{opacity:1;transform:scale(1)}}
+@keyframes breathe{0%,100%{box-shadow:0 6px 20px rgba(74,124,101,.3),0 0 0 0 rgba(74,124,101,.35)}60%{box-shadow:0 6px 20px rgba(74,124,101,.3),0 0 0 10px rgba(74,124,101,0)}}
+@keyframes pulse-ring{0%{box-shadow:0 0 0 0 rgba(74,124,101,.5),0 0 0 3px var(--sage)}70%{box-shadow:0 0 0 13px rgba(74,124,101,0),0 0 0 3px var(--sage)}100%{box-shadow:0 0 0 0 rgba(74,124,101,0),0 0 0 3px var(--sage)}}
+@keyframes star-pop{0%{opacity:0;transform:scale(0) rotate(-20deg)}70%{transform:scale(1.35) rotate(5deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+@keyframes draw-line{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+@keyframes fab-bounce{0%{opacity:0;transform:translateY(64px)}65%{opacity:1;transform:translateY(-6px)}82%{transform:translateY(3px)}100%{transform:translateY(0)}}
+@keyframes badge-shimmer{0%{background-position:200% center}100%{background-position:-200% center}}
+@keyframes nav-drop{from{opacity:0;transform:translateY(-100%)}to{opacity:1;transform:translateY(0)}}
+
+/* Nav — slide down on page load */
+.nav{animation:nav-drop .5s cubic-bezier(.4,0,.2,1) both}
+
+/* Nav links — underline draws left→right on hover */
+.nav__links a{position:relative}
+.nav__links a::after{content:'';position:absolute;left:0;bottom:-2px;height:1.5px;width:0;background:var(--sage);border-radius:2px;transition:width .25s ease}
+.nav__links a:hover::after,.nav__links a.active::after{width:100%}
+
+/* Burger — morphs to × when open */
+.nav__burger span{transition:transform .3s ease,opacity .3s ease}
+.nav__burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav__burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav__burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* Hero — staggered entrance per element */
+.hero__text .overline{animation:fadeInLeft .5s .05s both}
+.hero__text h1{animation:fadeInUp .7s .18s both}
+.hero__text .hero__sub{animation:fadeInUp .6s .4s both}
+.hero__text .hero__body{animation:fadeInUp .6s .56s both}
+.hero__text .hero__actions{animation:fadeInUp .6s .72s both}
+.hero__image img{animation:scaleIn .9s .2s both}
+
+/* Card icons — bouncy lift on hover */
+.feature-card i,.help-card i{transition:transform .35s cubic-bezier(.34,1.56,.64,1),color .25s}
+.feature-card:hover i,.help-card:hover i{transform:translateY(-4px) scale(1.2)}
+
+/* During cards — icon inverts + slight rotate on hover */
+.during-card__icon{transition:background .3s ease}
+.during-card__icon i{transition:transform .4s cubic-bezier(.34,1.56,.64,1),color .3s}
+.during-card:hover .during-card__icon{background:var(--sage)}
+.during-card:hover .during-card__icon i{color:var(--white);transform:rotate(16deg) scale(1.1)}
+
+/* Images — subtle zoom on hover (parent clips overflow) */
+.hero__image,.wherever__img,.what-is__img,.meet__img{overflow:hidden;border-radius:var(--radius)}
+.hero__image img,.wherever__img img,.what-is__img img,.meet__img img{transition:transform .65s cubic-bezier(.25,.46,.45,.94)}
+.hero__image:hover img,.wherever__img:hover img,.what-is__img:hover img,.meet__img:hover img{transform:scale(1.04)}
+
+/* Process steps — staggered CSS reveal delays */
+.step:nth-child(1).reveal{transition-delay:0ms}
+.step:nth-child(2).reveal{transition-delay:100ms}
+.step:nth-child(3).reveal{transition-delay:200ms}
+.step:nth-child(4).reveal{transition-delay:300ms}
+.step:nth-child(5).reveal{transition-delay:400ms}
+/* Step numbers — single pulse ring after appearing */
+.step.visible .step__number{animation:pulse-ring 2s ease-out .5s 1}
+/* Connecting line — draws left→right when section enters viewport */
+.process-steps::before{transform-origin:left;animation:draw-line .9s .1s cubic-bezier(.4,0,.2,1) both;animation-play-state:paused}
+.process-steps.line-active::before{animation-play-state:running}
+
+/* Testimonials — stars pop in one by one on reveal */
+.testimonial.visible .testimonial__stars i{animation:star-pop .4s cubic-bezier(.34,1.56,.64,1) forwards;opacity:0}
+.testimonial.visible .testimonial__stars i:nth-child(1){animation-delay:.05s}
+.testimonial.visible .testimonial__stars i:nth-child(2){animation-delay:.15s}
+.testimonial.visible .testimonial__stars i:nth-child(3){animation-delay:.25s}
+.testimonial.visible .testimonial__stars i:nth-child(4){animation-delay:.35s}
+.testimonial.visible .testimonial__stars i:nth-child(5){animation-delay:.45s}
+
+/* Pricing badge — shimmer sweep */
+.pricing-card__badge{background:linear-gradient(90deg,var(--sage) 20%,var(--sage-light) 50%,var(--sage) 80%);background-size:300% auto;animation:badge-shimmer 3s linear infinite}
+
+/* Book CTA — breathe pulse to draw attention */
+#book .btn--primary{animation:breathe 3.5s ease-in-out 1s infinite}
+#book .btn--primary:hover{animation:none;transform:translateY(-1px)}
+
+/* FAB — bounce-in on load (mobile only) */
+@media(max-width:768px){.mob-fab{animation:fab-bounce .7s cubic-bezier(.34,1.56,.64,1) .9s both}}
+
+/* FAQ rows — sage tint on hover */
+.faq-item{transition:background .2s}
+.faq-item:hover{background:var(--sage-pale)}
+
+/* Footer socials — spring scale */
+.footer__socials a{transition:transform .3s cubic-bezier(.34,1.56,.64,1),background .2s,border-color .2s,color .2s}
+.footer__socials a:hover{transform:scale(1.2)}
+
+/* Respect prefers-reduced-motion */
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.15ms!important}}
+
   </style>
 </head>
 <body>
@@ -1141,11 +1236,13 @@ document.body.appendChild(mobile);
 var openMob = function() {
   mobile.classList.add('open');
   overlay.classList.add('open');
+  burger.classList.add('open');
   document.body.style.overflow = 'hidden';
 };
 var closeMob = function() {
   mobile.classList.remove('open');
   overlay.classList.remove('open');
+  burger.classList.remove('open');
   document.body.style.overflow = '';
 };
 burger.addEventListener('click', openMob);
@@ -1222,6 +1319,17 @@ document.querySelectorAll('.faq-btn').forEach(function(btn) {
     }
   });
 });
+
+// ===================== PROCESS LINE DRAW =====================
+var processSteps = document.querySelector('.process-steps');
+if (processSteps) {
+  new IntersectionObserver(function(entries, obs) {
+    if (entries[0].isIntersecting) {
+      processSteps.classList.add('line-active');
+      obs.disconnect();
+    }
+  }, { threshold: 0.35 }).observe(processSteps);
+}
 </script>
 </body>
 </html>
