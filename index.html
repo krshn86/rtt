@@ -1045,9 +1045,9 @@ const translations = {
 };
 
 // ===================== LANGUAGE ENGINE =====================
-var currentLang = (function() {
-  try { return localStorage.getItem('site-lang') || 'en'; } catch(e) { return 'en'; }
-})();
+var currentLang = 'en';
+try { currentLang = localStorage.getItem('site-lang') || 'en'; } catch(e) {}
+if (!translations[currentLang]) currentLang = 'en';
 
 function setLanguage(lang) {
   if (!translations[lang]) return;
@@ -1055,26 +1055,20 @@ function setLanguage(lang) {
   try { localStorage.setItem('site-lang', lang); } catch(e) {}
   document.documentElement.lang = lang;
   var t = translations[lang];
-
   document.querySelectorAll('[data-i18n]').forEach(function(el) {
     var key = el.getAttribute('data-i18n');
     if (t[key] !== undefined) el.innerHTML = t[key];
   });
-
   document.querySelectorAll('.lang-btn').forEach(function(btn) {
     btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
   });
 }
 
-function bindLangButtons() {
-  document.querySelectorAll('.lang-btn').forEach(function(btn) {
-    var fresh = btn.cloneNode(true);
-    btn.parentNode.replaceChild(fresh, btn);
-    fresh.addEventListener('click', function() {
-      setLanguage(this.getAttribute('data-lang'));
-    });
-  });
-}
+// Single event delegation — works for ALL lang buttons everywhere, always
+document.addEventListener('click', function(e) {
+  var btn = e.target.closest('.lang-btn');
+  if (btn) setLanguage(btn.getAttribute('data-lang'));
+});
 
 // ===================== NAV SCROLL =====================
 var nav = document.getElementById('nav');
@@ -1088,14 +1082,14 @@ var mobile = document.createElement('div');
 mobile.className = 'nav__mobile';
 mobile.innerHTML = [
   '<button class="nav__mobile-close" id="mob-close"><i class="fa-solid fa-xmark"></i></button>',
-  '<a href="#about" class="mob-link">About RTT</a>',
-  '<a href="#help" class="mob-link">How I Help</a>',
-  '<a href="#process" class="mob-link">Process</a>',
-  '<a href="#meet" class="mob-link">About Me</a>',
-  '<a href="#pricing" class="mob-link">Pricing</a>',
-  '<a href="#testimonials" class="mob-link">Testimonials</a>',
-  '<a href="#faq" class="mob-link">FAQ</a>',
-  '<a href="#book" class="mob-link">Book a Session</a>',
+  '<a href="#about" class="mob-link" data-i18n="nav_about">About RTT</a>',
+  '<a href="#help" class="mob-link" data-i18n="nav_help">How I Help</a>',
+  '<a href="#process" class="mob-link" data-i18n="nav_process">Process</a>',
+  '<a href="#meet" class="mob-link" data-i18n="nav_meet">About Me</a>',
+  '<a href="#pricing" class="mob-link" data-i18n="nav_pricing">Pricing</a>',
+  '<a href="#testimonials" class="mob-link" data-i18n="nav_testimonials">Testimonials</a>',
+  '<a href="#faq" class="mob-link" data-i18n="nav_faq">FAQ</a>',
+  '<a href="#book" class="mob-link" data-i18n="nav_cta">Book a Session</a>',
   '<div class="lang-switcher" style="margin-top:1.5rem">',
   '  <button class="lang-btn" data-lang="en">EN</button>',
   '  <span class="lang-sep">|</span>',
@@ -1113,23 +1107,7 @@ mobile.querySelectorAll('.mob-link').forEach(function(l) {
   l.addEventListener('click', closeMob);
 });
 
-// Bind all language buttons (nav + mobile) and apply saved language
-bindLangButtons();
-setLanguage(currentLang);
-
-// Also sync mobile nav link text whenever language changes
-var origSetLanguage = setLanguage;
-setLanguage = function(lang) {
-  origSetLanguage(lang);
-  var t = translations[lang];
-  if (!t) return;
-  var mobileLinks = mobile.querySelectorAll('.mob-link');
-  var keys = ['nav_about','nav_help','nav_process','nav_meet','nav_pricing','nav_testimonials','nav_faq','nav_cta'];
-  mobileLinks.forEach(function(el, i) {
-    if (keys[i] && t[keys[i]]) el.textContent = t[keys[i]];
-  });
-};
-// Re-apply to update mobile link text
+// Apply saved/default language (updates all [data-i18n] including mobile links)
 setLanguage(currentLang);
 
 // ===================== REVEAL =====================
