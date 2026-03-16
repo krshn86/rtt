@@ -1349,18 +1349,15 @@ if (processSteps) {
 }
 </script>
 
-<!-- Calendly popup widget -->
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<!-- Calendly popup widget — loaded synchronously so it is always ready -->
+<script src="https://assets.calendly.com/assets/external/widget.js"></script>
 <script>
-// Intercept all Calendly booking buttons and open the popup instead of a new tab.
-// Falls back to normal link behaviour if the widget script hasn't loaded yet.
+// Always prevent default navigation; open Calendly popup on desktop & mobile.
 document.addEventListener('click', function(e) {
   var link = e.target.closest('a[href="https://calendly.com/angela-tudor"]');
   if (!link) return;
-  if (window.Calendly && typeof Calendly.initPopupWidget === 'function') {
-    e.preventDefault();
-    Calendly.initPopupWidget({ url: 'https://calendly.com/angela-tudor' });
-  }
+  e.preventDefault();
+  Calendly.initPopupWidget({ url: 'https://calendly.com/angela-tudor' });
 });
 </script>
 </body>
