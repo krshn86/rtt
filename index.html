@@ -239,17 +239,20 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
   .step{flex-direction:row;text-align:left;gap:1.25rem;align-items:flex-start}.step__number{margin-bottom:0}
   .during-grid{grid-template-columns:1fr}
   .footer__grid{grid-template-columns:1fr;gap:2rem}.footer__bottom{flex-direction:column;text-align:center}
-  /* Horizontal snap-scroll carousels */
-  .help-grid{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1rem;scrollbar-width:none}
+  /* Horizontal snap-scroll carousels — align-items:flex-start prevents cards
+     from stretching to the tallest sibling's height */
+  .help-grid{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1rem;scrollbar-width:none;align-items:flex-start}
   .help-grid::-webkit-scrollbar{display:none}
   .help-grid .help-card{min-width:min(280px,78vw);scroll-snap-align:start;flex-shrink:0}
-  .testimonials-grid{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1rem;scrollbar-width:none}
+  .testimonials-grid{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1rem;scrollbar-width:none;align-items:flex-start}
   .testimonials-grid::-webkit-scrollbar{display:none}
   .testimonials-grid .testimonial{min-width:min(300px,84vw);scroll-snap-align:start;flex-shrink:0}
-  .pricing-grid{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1rem;scrollbar-width:none;align-items:stretch}
+  .pricing-grid{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:1rem;scrollbar-width:none;align-items:flex-start}
   .pricing-grid::-webkit-scrollbar{display:none}
   .pricing-grid .pricing-card{min-width:min(310px,84vw);scroll-snap-align:center;flex-shrink:0;transform:none!important}
   .pricing-card--featured{box-shadow:0 0 0 2px var(--sage),var(--shadow-md)}
+  /* About photo — smaller, better centred crop on mobile */
+  .meet__img img{height:260px;object-position:center 12%}
 }
 @media(max-width:480px){
   .features-grid{grid-template-columns:1fr!important}
@@ -616,55 +619,54 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
     <div class="pricing-grid mt-lg">
       <div class="pricing-card">
         <div class="pricing-card__header">
-          <h3 data-i18n="price_p1h">Private</h3>
-          <p class="pricing-card__sub" data-i18n="price_p1sub">For private individuals</p>
+          <h3 data-i18n="price_p1h">1 Session</h3>
+          <p class="pricing-card__sub" data-i18n="price_p1sub">Single session</p>
         </div>
-        <div class="pricing-card__price"><span class="price">€400</span><span style="font-size:.85rem;color:var(--text-muted);margin-left:.4rem" data-i18n="price_inclvat">incl. VAT</span></div>
+        <div class="pricing-card__price"><span class="price">€400</span></div>
         <ul class="pricing-card__features">
           <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_session">90–120 min RTT session (online)</span></li>
           <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_audio">Personalised 15-min audio recording</span></li>
           <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_guide">21-day listening guide</span></li>
           <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_checkup">Check-up after one week</span></li>
           <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_eval">Evaluation after three weeks</span></li>
-          <li class="muted"><i class="fa-solid fa-xmark"></i> <span data-i18n="pf_invoice">Business invoicing</span></li>
         </ul>
-        <a href="https://calendly.com/angela-tudor" target="_blank" rel="noopener noreferrer" class="btn btn--outline-dark" data-i18n="price_btn_book">Book Now</a>
+        <a href="https://calendly.com/angela-tudor" target="_blank" rel="noopener noreferrer" class="btn btn--outline-dark btn--full" data-i18n="price_btn_book">Book Now</a>
       </div>
       <div class="pricing-card pricing-card--featured">
-        <div class="pricing-card__badge" data-i18n="price_popular">Most Popular</div>
+        <div class="pricing-card__badge" data-i18n="price_popular">Best Value</div>
         <div class="pricing-card__header">
-          <h3 data-i18n="price_p2h">Business</h3>
-          <p class="pricing-card__sub" data-i18n="price_p2sub">For business professionals</p>
+          <h3 data-i18n="price_p2h">2 Sessions</h3>
+          <p class="pricing-card__sub" data-i18n="price_p2sub">Save €50</p>
         </div>
-        <div class="pricing-card__price"><span class="price">€450</span><span style="font-size:.85rem;color:var(--text-muted);margin-left:.4rem" data-i18n="price_exclvat">excl. VAT</span></div>
+        <div class="pricing-card__price"><span class="price">€750</span></div>
         <ul class="pricing-card__features">
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_session">90–120 min RTT session (online)</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_audio">Personalised 15-min audio recording</span></li>
+          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_2sessions">2 × 90–120 min RTT sessions (online)</span></li>
+          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_2audio">2 personalised audio recordings</span></li>
           <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_guide">21-day listening guide</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_checkup">Check-up after one week</span></li>
+          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_checkup_each">Check-up after each session</span></li>
           <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_eval">Evaluation after three weeks</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_invoice_yes">Business invoicing included</span></li>
+          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_priority">Priority scheduling</span></li>
         </ul>
-        <a href="https://calendly.com/angela-tudor" target="_blank" rel="noopener noreferrer" class="btn btn--primary" data-i18n="price_btn_book">Book Now</a>
+        <a href="https://calendly.com/angela-tudor" target="_blank" rel="noopener noreferrer" class="btn btn--primary btn--full" data-i18n="price_btn_book">Book Now</a>
       </div>
       <div class="pricing-card">
         <div class="pricing-card__header">
-          <h3 data-i18n="price_p3h">Team Sessions</h3>
-          <p class="pricing-card__sub" data-i18n="price_p3sub">Tailored offer for teams</p>
+          <h3 data-i18n="price_p3h">3 Sessions</h3>
+          <p class="pricing-card__sub" data-i18n="price_p3sub">Save €200</p>
         </div>
-        <div class="pricing-card__price"><span class="price" style="font-size:2rem" data-i18n="price_contact">Contact us</span></div>
+        <div class="pricing-card__price"><span class="price">€1,000</span></div>
         <ul class="pricing-card__features">
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_t1">Customised team programme</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_t2">Tailored session format</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_t3">Group or individual sessions</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_t4">Follow-up and evaluation</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_invoice_yes">Business invoicing included</span></li>
-          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_t5">Flexible scheduling</span></li>
+          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_3sessions">3 × 90–120 min RTT sessions (online)</span></li>
+          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_3audio">3 personalised audio recordings</span></li>
+          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_guide">21-day listening guide</span></li>
+          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_checkup_each">Check-up after each session</span></li>
+          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_eval">Full progress evaluation</span></li>
+          <li><i class="fa-solid fa-check"></i> <span data-i18n="pf_priority">Priority scheduling</span></li>
         </ul>
-        <a href="mailto:info@atdriveyourmind.com" class="btn btn--outline-dark" data-i18n="price_btn_contact">Get in Touch</a>
+        <a href="https://calendly.com/angela-tudor" target="_blank" rel="noopener noreferrer" class="btn btn--outline-dark btn--full" data-i18n="price_btn_book">Book Now</a>
       </div>
     </div>
-    <p class="pricing-note center mt-md" data-i18n="price_note">For nine out of ten clients, one RTT session is enough to make a huge consciousness shift. Some clients come back after a while — once you've discovered the power of RTT, you'll know when you're ready for the next step. For team sessions, please contact <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a> for a tailored offer.</p>
+    <p class="pricing-note center mt-md" data-i18n="price_note">Choose the package that works for you. Every session includes a personalised audio recording, 21-day listening guide, check-up, and evaluation. Questions? <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a></p>
   </div>
 </section>
 
@@ -815,7 +817,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
       </div>
     </div>
     <div class="footer__bottom">
-      <p data-i18n="footer_copy">&copy; 2026 Angela RTT. All rights reserved.</p>
+      <p data-i18n="footer_copy">&copy; 2026 AtDriveYourMind. All rights reserved.</p>
       <p data-i18n="footer_member">Member of the RTT Alumni Association. Fully insured.</p>
     </div>
   </div>
@@ -903,21 +905,20 @@ const translations = {
     about_cta:"Work With Me",
 
     price_overline:"Investment", price_heading:"Invest in Yourself",
-    price_intro:"Every package includes your personalised audio recording, a 21-day listening guide, a check-up after one week, and an evaluation after three weeks.",
-    price_p1h:"Private", price_p1sub:"For private individuals",
-    price_inclvat:"incl. VAT", price_exclvat:"excl. VAT",
-    price_p2h:"Business", price_p2sub:"For business professionals",
-    price_popular:"Most Popular",
-    price_p3h:"Team Sessions", price_p3sub:"Tailored offer for teams",
-    price_contact:"Contact us",
+    price_intro:"Choose the package that works for you. Every session includes a personalised audio recording, 21-day listening guide, check-up, and evaluation.",
+    price_p1h:"1 Session", price_p1sub:"Single session",
+    price_p2h:"2 Sessions", price_p2sub:"Save €50",
+    price_popular:"Best Value",
+    price_p3h:"3 Sessions", price_p3sub:"Save €200",
     price_btn_book:"Book Now", price_btn_contact:"Get in Touch",
     pf_session:"90–120 min RTT session (online)", pf_audio:"Personalised 15-min audio recording",
+    pf_2sessions:"2 × 90–120 min RTT sessions (online)", pf_2audio:"2 personalised audio recordings",
+    pf_3sessions:"3 × 90–120 min RTT sessions (online)", pf_3audio:"3 personalised audio recordings",
     pf_guide:"21-day listening guide", pf_checkup:"Check-up after one week",
-    pf_eval:"Evaluation after three weeks", pf_invoice:"Business invoicing",
-    pf_invoice_yes:"Business invoicing included",
-    pf_t1:"Customised team programme", pf_t2:"Tailored session format",
-    pf_t3:"Group or individual sessions", pf_t4:"Follow-up and evaluation", pf_t5:"Flexible scheduling",
-    price_note:"For nine out of ten clients, one RTT session is enough to make a huge consciousness shift. Some clients come back after a while — once you've discovered the power of RTT, you'll know when you're ready for the next step. For team sessions, please contact <a href=\"mailto:info@atdriveyourmind.com\">info@atdriveyourmind.com</a> for a tailored offer.",
+    pf_checkup_each:"Check-up after each session",
+    pf_eval:"Evaluation after three weeks",
+    pf_priority:"Priority scheduling",
+    price_note:"Choose the package that works for you. Every session includes a personalised audio recording, 21-day listening guide, check-up, and evaluation. Questions? <a href=\"mailto:info@atdriveyourmind.com\">info@atdriveyourmind.com</a>",
 
     test_overline:"Client Stories", test_heading:"What Clients Say",
     test_label_smoking:"Smoking Cessation",
@@ -945,7 +946,7 @@ const translations = {
     footer_explore:"Explore", footer_support:"Support", footer_contact:"Get in Touch",
     footer_privacy:"Privacy Policy", footer_terms:"Terms & Conditions", footer_disclaimer:"Disclaimer",
     footer_cta:"Book a Free Call",
-    footer_copy:"© 2026 Angela RTT. All rights reserved.",
+    footer_copy:"© 2026 AtDriveYourMind. All rights reserved.",
     footer_member:"Member of the RTT Alumni Association. Fully insured."
   },
 
@@ -1022,21 +1023,20 @@ const translations = {
     about_cta:"Travailler avec moi",
 
     price_overline:"Investissement", price_heading:"Investissez en vous",
-    price_intro:"Chaque formule inclut votre enregistrement audio personnalisé, un guide d'écoute de 21 jours, un check-up après une semaine et une évaluation après trois semaines.",
-    price_p1h:"Particulier", price_p1sub:"Pour les particuliers",
-    price_inclvat:"TVA incluse", price_exclvat:"hors TVA",
-    price_p2h:"Entreprise", price_p2sub:"Pour les professionnels",
-    price_popular:"Le plus populaire",
-    price_p3h:"Sessions d'équipe", price_p3sub:"Offre sur mesure pour les équipes",
-    price_contact:"Nous contacter",
+    price_intro:"Choisissez la formule qui vous convient. Chaque session inclut un enregistrement audio personnalisé, un guide d'écoute de 21 jours, un check-up et une évaluation.",
+    price_p1h:"1 Session", price_p1sub:"Session unique",
+    price_p2h:"2 Sessions", price_p2sub:"Économisez 50 €",
+    price_popular:"Meilleure offre",
+    price_p3h:"3 Sessions", price_p3sub:"Économisez 200 €",
     price_btn_book:"Réserver", price_btn_contact:"Prendre contact",
     pf_session:"Session RTT de 90–120 min (en ligne)", pf_audio:"Enregistrement audio personnalisé de 15 min",
+    pf_2sessions:"2 × sessions RTT de 90–120 min (en ligne)", pf_2audio:"2 enregistrements audio personnalisés",
+    pf_3sessions:"3 × sessions RTT de 90–120 min (en ligne)", pf_3audio:"3 enregistrements audio personnalisés",
     pf_guide:"Guide d'écoute de 21 jours", pf_checkup:"Check-up après une semaine",
-    pf_eval:"Évaluation après trois semaines", pf_invoice:"Facturation entreprise",
-    pf_invoice_yes:"Facturation entreprise incluse",
-    pf_t1:"Programme d'équipe personnalisé", pf_t2:"Format de session sur mesure",
-    pf_t3:"Sessions individuelles ou en groupe", pf_t4:"Suivi et évaluation", pf_t5:"Planification flexible",
-    price_note:"Pour neuf clients sur dix, une session suffit pour changer fondamentalement. Certains clients reviennent simplement parce qu'ils ont découvert l'énorme potentiel de leur sous-conscient et veulent explorer plus en détail. Pour les sessions d'équipe, contactez <a href=\"mailto:info@atdriveyourmind.com\">info@atdriveyourmind.com</a> pour une offre sur mesure.",
+    pf_checkup_each:"Check-up après chaque session",
+    pf_eval:"Évaluation après trois semaines",
+    pf_priority:"Planification prioritaire",
+    price_note:"Choisissez la formule qui vous convient. Chaque session inclut un enregistrement audio personnalisé, un guide de 21 jours, un check-up et une évaluation. Questions ? <a href=\"mailto:info@atdriveyourmind.com\">info@atdriveyourmind.com</a>",
 
     test_overline:"Témoignages clients", test_heading:"Ce que disent les clients",
     test_label_smoking:"Arrêt du tabac",
@@ -1064,7 +1064,7 @@ const translations = {
     footer_explore:"Explorer", footer_support:"Assistance", footer_contact:"Prendre contact",
     footer_privacy:"Politique de confidentialité", footer_terms:"Conditions générales", footer_disclaimer:"Avertissement",
     footer_cta:"Appel gratuit",
-    footer_copy:"© 2026 Angela RTT. Tous droits réservés.",
+    footer_copy:"© 2026 AtDriveYourMind. Tous droits réservés.",
     footer_member:"Membre de l'Association Alumni RTT. Entièrement assuré."
   },
 
@@ -1141,21 +1141,20 @@ const translations = {
     about_cta:"Lucrați cu mine",
 
     price_overline:"Investiția", price_heading:"Investiți în dumneavoastră",
-    price_intro:"Fiecare pachet include înregistrarea audio personalizată, un ghid de ascultare de 21 de zile, o verificare după o săptămână și o evaluare după trei săptămâni.",
-    price_p1h:"Persoane fizice", price_p1sub:"Pentru persoane fizice",
-    price_inclvat:"incl. TVA", price_exclvat:"fără TVA",
-    price_p2h:"Business", price_p2sub:"Pentru profesioniști",
-    price_popular:"Cel mai popular",
-    price_p3h:"Sesiuni de echipă", price_p3sub:"Ofertă personalizată pentru echipe",
-    price_contact:"Contactați-ne",
+    price_intro:"Alegeți pachetul potrivit pentru dvs. Fiecare sesiune include înregistrare audio personalizată, ghid de 21 de zile, verificare și evaluare.",
+    price_p1h:"1 Sesiune", price_p1sub:"Sesiune unică",
+    price_p2h:"2 Sesiuni", price_p2sub:"Economisești 50 €",
+    price_popular:"Cea mai bună ofertă",
+    price_p3h:"3 Sesiuni", price_p3sub:"Economisești 200 €",
     price_btn_book:"Rezervați", price_btn_contact:"Luați legătura",
     pf_session:"Sesiune RTT de 90–120 min (online)", pf_audio:"Înregistrare audio personalizată de 15 min",
+    pf_2sessions:"2 × sesiuni RTT de 90–120 min (online)", pf_2audio:"2 înregistrări audio personalizate",
+    pf_3sessions:"3 × sesiuni RTT de 90–120 min (online)", pf_3audio:"3 înregistrări audio personalizate",
     pf_guide:"Ghid de ascultare de 21 de zile", pf_checkup:"Verificare după o săptămână",
-    pf_eval:"Evaluare după trei săptămâni", pf_invoice:"Facturare business",
-    pf_invoice_yes:"Facturare business inclusă",
-    pf_t1:"Program de echipă personalizat", pf_t2:"Format de sesiune adaptat",
-    pf_t3:"Sesiuni individuale sau de grup", pf_t4:"Urmărire și evaluare", pf_t5:"Programare flexibilă",
-    price_note:"Pentru nouă din zece clienți, o sesiune RTT este suficientă pentru a face o schimbare durabilă. Unii clienți revin după un timp — pentru că odată ce ați descoperit puterea RTT, veți ști când sunteți pregătit(ă) pentru următorul pas. Pentru sesiuni de echipă, contactați <a href=\"mailto:info@atdriveyourmind.com\">info@atdriveyourmind.com</a> pentru o ofertă personalizată.",
+    pf_checkup_each:"Verificare după fiecare sesiune",
+    pf_eval:"Evaluare după trei săptămâni",
+    pf_priority:"Programare prioritară",
+    price_note:"Alegeți pachetul potrivit. Fiecare sesiune include înregistrare audio personalizată, ghid de 21 de zile, verificare și evaluare. Întrebări? <a href=\"mailto:info@atdriveyourmind.com\">info@atdriveyourmind.com</a>",
 
     test_overline:"Povești de succes", test_heading:"Ce spun clienții",
     test_label_smoking:"Renunțarea la fumat",
@@ -1183,7 +1182,7 @@ const translations = {
     footer_explore:"Explorați", footer_support:"Suport", footer_contact:"Luați legătura",
     footer_privacy:"Politica de confidențialitate", footer_terms:"Termeni & Condiții", footer_disclaimer:"Declinare",
     footer_cta:"Apel gratuit",
-    footer_copy:"© 2026 Angela RTT. Toate drepturile rezervate.",
+    footer_copy:"© 2026 AtDriveYourMind. Toate drepturile rezervate.",
     footer_member:"Membră a Asociației Alumni RTT. Complet asigurată."
   }
 };
