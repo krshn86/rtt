@@ -495,7 +495,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
         <a href="#book" class="btn btn--primary btn--full">Book Now</a>
       </div>
     </div>
-    <p style="text-align:center;font-size:.9rem;color:var(--text-muted);margin-top:2rem">Questions? <a href="/cdn-cgi/l/email-protection#cda4a3aba28dacb9a9bfa4bba8b4a2b8bfa0a4a3a9e3aea2a0" style="color:var(--sage);text-decoration:underline"><span class="__cf_email__" data-cfemail="9cf5f2faf3dcfde8f8eef5eaf9e5f3e9eef1f5f2f8b2fff3f1">[email&#160;protected]</span></a></p>
+    <p style="text-align:center;font-size:.9rem;color:var(--text-muted);margin-top:2rem">Questions? <a href="mailto:info@atdriveyourmind.com" style="color:var(--sage);text-decoration:underline">info@atdriveyourmind.com</a></p>
   </div>
 </section>
 
@@ -579,7 +579,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
       </div>
       <div style="display:flex;align-items:center;gap:1rem">
         <div style="width:44px;height:44px;background:var(--sage-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--sage);font-size:1rem;flex-shrink:0"><i class="fa-solid fa-envelope"></i></div>
-        <div><strong style="display:block;font-size:.93rem"><a href="/cdn-cgi/l/email-protection#b4dddad2dbf4d5c0d0c6ddc2d1cddbc1c6d9dddad09ad7dbd9"><span class="__cf_email__" data-cfemail="96fff8f0f9d6f7e2f2e4ffe0f3eff9e3e4fbfff8f2b8f5f9fb">[email&#160;protected]</span></a></strong><span style="font-size:.83rem;color:var(--text-muted)">Get in touch</span></div>
+        <div><strong style="display:block;font-size:.93rem"><a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a></strong><span style="font-size:.83rem;color:var(--text-muted)">Get in touch</span></div>
       </div>
       <div style="display:flex;align-items:center;gap:1rem">
         <div style="width:44px;height:44px;background:var(--sage-pale);border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--sage);font-size:1rem;flex-shrink:0"><i class="fa-solid fa-globe"></i></div>
@@ -628,7 +628,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
       </div>
       <div class="footer__contact">
         <h5>Get in Touch</h5>
-        <p><i class="fa-solid fa-envelope"></i> <a href="/cdn-cgi/l/email-protection#b4dddad2dbf4d5c0d0c6ddc2d1cddbc1c6d9dddad09ad7dbd9"><span class="__cf_email__" data-cfemail="5f363139301f3e2b3b2d36293a26302a2d3236313b713c3032">[email&#160;protected]</span></a></p>
+        <p><i class="fa-solid fa-envelope"></i> <a href="mailto:info@atdriveyourmind.com">info@atdriveyourmind.com</a></p>
         <a href="https://calendly.com/angela-tudor" target="_blank" rel="noopener noreferrer" class="btn btn--primary mt-sm">Book a Free Call</a>
       </div>
     </div>
@@ -639,7 +639,52 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
   </div>
 </footer>
 
-<div id="cursor-ring"></div>
+<!-- GDPR COOKIE BANNER -->
+<div id="cookie-banner" style="display:none">
+  <div id="cookie-inner">
+    <div id="cookie-text">
+      <i class="fa-solid fa-cookie-bite" style="color:var(--sage);font-size:1.4rem;flex-shrink:0;margin-top:.15rem"></i>
+      <div>
+        <strong style="display:block;font-size:.93rem;color:var(--charcoal);margin-bottom:.3rem">We use cookies</strong>
+        <p style="font-size:.83rem;color:var(--text-muted);margin:0;line-height:1.6">We use functional, analytical and tracking cookies to improve your experience. By clicking <strong>Accept</strong> you consent to our use of cookies. Read our <a href="#" style="color:var(--sage);text-decoration:underline">Privacy Policy</a> for details.</p>
+      </div>
+    </div>
+    <div id="cookie-actions">
+      <button id="cookie-decline" onclick="cookieChoice(false)">Decline</button>
+      <button id="cookie-accept" onclick="cookieChoice(true)">Accept</button>
+    </div>
+  </div>
+</div>
+
+<style>
+#cookie-banner{position:fixed;bottom:0;left:0;right:0;z-index:9000;background:var(--white);border-top:1px solid var(--border);box-shadow:0 -4px 32px rgba(0,0,0,.1);padding:1.25rem var(--pad);animation:slideUpCookie .5s cubic-bezier(.4,0,.2,1) both}
+@keyframes slideUpCookie{from{transform:translateY(100%);opacity:0}to{transform:translateY(0);opacity:1}}
+#cookie-inner{max-width:var(--max-w);margin-inline:auto;display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap}
+#cookie-text{display:flex;align-items:flex-start;gap:.85rem;flex:1;min-width:260px}
+#cookie-actions{display:flex;gap:.75rem;flex-shrink:0}
+#cookie-decline{padding:.6rem 1.2rem;border-radius:4px;border:2px solid var(--border);background:transparent;font-size:.83rem;font-weight:500;color:var(--text-muted);cursor:pointer;transition:all .2s}
+#cookie-decline:hover{border-color:var(--charcoal);color:var(--charcoal)}
+#cookie-accept{padding:.6rem 1.4rem;border-radius:4px;border:2px solid var(--sage);background:var(--sage);font-size:.83rem;font-weight:600;color:#fff;cursor:pointer;transition:all .2s}
+#cookie-accept:hover{background:var(--sage-dark);border-color:var(--sage-dark)}
+@media(max-width:480px){#cookie-inner{flex-direction:column;gap:1rem}#cookie-actions{width:100%;justify-content:flex-end}}
+</style>
+
+<script>
+// COOKIE BANNER
+(function(){
+  try{ if(localStorage.getItem('cookie-consent')) return; } catch(e){}
+  var b = document.getElementById('cookie-banner');
+  setTimeout(function(){ b.style.display='block'; }, 800);
+})();
+function cookieChoice(accepted){
+  try{ localStorage.setItem('cookie-consent', accepted ? 'accepted' : 'declined'); } catch(e){}
+  var b = document.getElementById('cookie-banner');
+  b.style.transition='transform .4s ease,opacity .4s ease';
+  b.style.transform='translateY(100%)';
+  b.style.opacity='0';
+  setTimeout(function(){ b.style.display='none'; }, 420);
+}
+</script>
 <div id="cursor-dot"></div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
