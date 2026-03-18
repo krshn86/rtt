@@ -290,6 +290,28 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
   </div>
 </nav>
 
+<!-- MOBILE NAV DRAWER -->
+<div class="nav__overlay" id="navOverlay"></div>
+<div class="nav__drawer" id="navDrawer" aria-label="Mobile navigation">
+  <ul class="nav__drawer-links" id="navMobileLinks">
+    <li><a href="#about">About RTT</a></li>
+    <li><a href="#help">How I Help</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#meet">About Me</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#book" id="navMobileBookBtn" class="btn btn--primary nav__drawer-cta">Book a Session</a>
+  <div class="lang-switcher lang-switcher--drawer">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" data-lang="ro">RO</button>
+  </div>
+</div>
+
 <!-- HERO -->
 <section class="hero">
   <div class="hero__inner container">
@@ -454,7 +476,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
       <h2>Invest in Yourself</h2>
       <p class="section-intro">Every package includes your personalised audio recording, a 21-day listening guide, a check-up after one week, and an evaluation after three weeks.</p>
     </div>
-    <div class="pricing-grid mt-lg">
+    <div class="carousel-wrap" id="pricingCarouselWrap"><div class="pricing-grid mt-lg">
       <div class="pricing-card">
         <div class="pricing-card__header"><h3>1 Session</h3><p class="pricing-card__sub">Single session</p></div>
         <div class="pricing-card__price"><span class="price">€400</span></div>
@@ -494,7 +516,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
         </ul>
         <a href="#book" class="btn btn--primary btn--full">Book Now</a>
       </div>
-    </div>
+    </div></div>
     <p style="text-align:center;font-size:.9rem;color:var(--text-muted);margin-top:2rem">Questions? <a href="mailto:info@atdriveyourmind.com" style="color:var(--sage);text-decoration:underline">info@atdriveyourmind.com</a></p>
   </div>
 </section>
@@ -506,7 +528,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
       <p class="overline">Client Stories</p>
       <h2>What Clients Say</h2>
     </div>
-    <div class="testimonials-grid mt-lg">
+    <div class="carousel-wrap" id="testimonialsCarouselWrap"><div class="testimonials-grid mt-lg">
       <div class="testimonial">
         <div class="testimonial__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><span>5/5</span></div>
         <p class="testimonial__text">"The session with Angela is heartwarming and her warm voice guides me very calmly, lovingly and naturally to a state of light hypnosis, in which it soon becomes clear where the blockages come from. Very special and moving."</p>
@@ -527,7 +549,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
         <p class="testimonial__text">"The session concerns a physical situation: a recurring inflammation in my right upper jaw. After a week I notice that the pain calms down. After three weeks the previously inflamed area looks a lot better. I am very surprised."</p>
         <div class="testimonial__author"><strong>Jane H.</strong></div>
       </div>
-    </div>
+    </div></div>
   </div>
 </section>
 
@@ -758,6 +780,158 @@ document.querySelectorAll('.faq-btn').forEach(function(btn) {
     }
   });
 });
+</script>
+
+<style>
+/* ─── MOBILE NAV DRAWER ─── */
+.nav__overlay{display:none;position:fixed;inset:0;background:rgba(30,40,34,.45);z-index:98;backdrop-filter:blur(2px);opacity:0;transition:opacity .3s ease}
+.nav__overlay.open{display:block;opacity:1}
+.nav__drawer{position:fixed;top:0;right:0;bottom:0;width:min(320px,85vw);background:var(--cream);z-index:99;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding:5rem 2rem 2.5rem;box-shadow:-8px 0 40px rgba(0,0,0,.15)}
+.nav__drawer.open{transform:translateX(0)}
+.nav__drawer-links{display:flex;flex-direction:column;gap:.25rem;margin-bottom:2rem}
+.nav__drawer-links li{border-bottom:1px solid var(--border)}
+.nav__drawer-links a{display:block;padding:.9rem .25rem;font-size:1rem;font-weight:500;color:var(--charcoal);transition:color .2s,padding-left .2s}
+.nav__drawer-links a:hover{color:var(--sage);padding-left:.5rem}
+.nav__drawer-cta{width:100%;text-align:center;margin-bottom:1.5rem}
+.lang-switcher--drawer{justify-content:center}
+/* Burger animation */
+.nav__burger span{transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .2s}
+.nav__burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav__burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav__burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ─── CAROUSEL ─── */
+.carousel-wrap{position:relative}
+
+/* Pricing carousel – mobile */
+@media(max-width:768px){
+  #pricingCarouselWrap .pricing-grid{
+    display:flex!important;
+    flex-direction:row!important;
+    grid-template-columns:unset!important;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    gap:1.25rem;
+    padding:.5rem 1.5rem 1rem;
+    margin-inline:calc(-1*var(--pad));
+  }
+  #pricingCarouselWrap .pricing-grid::-webkit-scrollbar{display:none}
+  #pricingCarouselWrap .pricing-card{flex:0 0 min(82vw,320px);scroll-snap-align:center}
+  #pricingCarouselWrap .pricing-card--featured{transform:none}
+  /* Testimonials carousel – mobile */
+  #testimonialsCarouselWrap .testimonials-grid{
+    display:flex!important;
+    flex-direction:row!important;
+    grid-template-columns:unset!important;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    gap:1.25rem;
+    padding:.5rem 1.5rem 1rem;
+    margin-inline:calc(-1*var(--pad));
+  }
+  #testimonialsCarouselWrap .testimonials-grid::-webkit-scrollbar{display:none}
+  #testimonialsCarouselWrap .testimonial{flex:0 0 min(85vw,380px);scroll-snap-align:center}
+}
+
+/* Carousel dots */
+.carousel-dots{display:none;justify-content:center;gap:.5rem;margin-top:1rem}
+@media(max-width:768px){.carousel-dots{display:flex}}
+.carousel-dot{width:8px;height:8px;border-radius:50%;background:var(--border);border:none;cursor:pointer;padding:0;transition:all .25s;flex-shrink:0}
+.carousel-dot.active{background:var(--sage);transform:scale(1.35)}
+
+/* ─── MOBILE LAYOUT FIXES ─── */
+@media(max-width:768px){
+  /* Hero image height on mobile */
+  .hero__image img{height:300px!important}
+  /* wherever image */
+  .wherever .grid-2>div:first-child img{height:280px!important}
+  /* what-is image */
+  .what-is .grid-2>div:last-child img{height:280px!important}
+  /* meet image */
+  .meet__img img{height:360px!important}
+  /* nav burger gap */
+  .nav__burger span{margin:0}
+  /* book section info items */
+  #book>div>div:nth-child(2){flex-direction:column;align-items:flex-start;gap:1rem}
+}
+@media(max-width:480px){
+  .during-grid{gap:1.25rem}
+  .help-grid{gap:1.25rem}
+}
+</style>
+
+<script>
+// MOBILE NAV
+(function () {
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('navDrawer');
+  var overlay = document.getElementById('navOverlay');
+
+  function openNav() {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    burger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeNav() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    burger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  if (burger) burger.addEventListener('click', function () {
+    drawer.classList.contains('open') ? closeNav() : openNav();
+  });
+  if (overlay) overlay.addEventListener('click', closeNav);
+
+  // Close drawer on link click
+  document.querySelectorAll('.nav__drawer-links a, .nav__drawer-cta').forEach(function (a) {
+    a.addEventListener('click', closeNav);
+  });
+})();
+
+// CAROUSEL DOTS
+(function () {
+  function initCarousel(wrapId, itemSelector) {
+    var wrap = document.getElementById(wrapId);
+    if (!wrap) return;
+    var grid = wrap.firstElementChild;
+    var items = Array.from(wrap.querySelectorAll(itemSelector));
+    if (!items.length) return;
+
+    var dotsWrap = document.createElement('div');
+    dotsWrap.className = 'carousel-dots';
+    var dots = items.map(function (item, i) {
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to item ' + (i + 1));
+      dot.addEventListener('click', function () {
+        item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      });
+      dotsWrap.appendChild(dot);
+      return dot;
+    });
+    wrap.appendChild(dotsWrap);
+
+    grid.addEventListener('scroll', function () {
+      var center = grid.scrollLeft + grid.clientWidth / 2;
+      var closest = 0, minDist = Infinity;
+      items.forEach(function (item, i) {
+        var dist = Math.abs((item.offsetLeft + item.offsetWidth / 2) - center);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === closest); });
+    }, { passive: true });
+  }
+
+  initCarousel('pricingCarouselWrap', '.pricing-card');
+  initCarousel('testimonialsCarouselWrap', '.testimonial');
+})();
 </script>
 
 <script>
@@ -1238,6 +1412,11 @@ document.querySelectorAll('.faq-btn').forEach(function(btn) {
     var navLinks = document.querySelectorAll('.nav__links a');
     t.nav.links.forEach(function (text, i) { setText(navLinks[i], text); });
     setText(document.querySelector('.btn--nav'), t.nav.bookBtn);
+    // Mobile nav drawer
+    var mobLinks = document.querySelectorAll('#navMobileLinks a');
+    t.nav.links.forEach(function (text, i) { setText(mobLinks[i], text); });
+    var mobBookBtn = document.getElementById('navMobileBookBtn');
+    setText(mobBookBtn, t.nav.bookBtn);
 
     // ── HERO ──
     set(document.querySelector('.hero .overline'), t.hero.overline);
