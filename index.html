@@ -2,7 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#eaf2ee" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="format-detection" content="telephone=no" />
   <title>Angela | Rapid Transformational Therapy</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -360,11 +365,11 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
       <h2>Are you running into blockages?</h2>
       <p class="section-intro">Our mind always drives us to what is familiar, and will try to keep us away from what is unfamiliar. This explains why we always fall back into old patterns. With RTT, we discover the reason behind those patterns, break the connection, and create a new positive pattern that works for you.</p>
     </div>
-    <div class="features-grid mt-lg" style="grid-template-columns:repeat(3,1fr)">
+    <div class="carousel-wrap" id="powerCarouselWrap"><div class="features-grid mt-lg" style="grid-template-columns:repeat(3,1fr)">
       <div class="feature-card" style="text-align:center"><i class="fa-solid fa-ban"></i><h4>Breaking Limiting Patterns</h4><p>Break limiting habits and patterns, perform better and achieve results in work and relationships.</p></div>
       <div class="feature-card" style="text-align:center"><i class="fa-solid fa-brain"></i><h4>Focus &amp; Motivation</h4><p>Improve focus and motivation, relieve stress, and move forward with clarity and confidence.</p></div>
       <div class="feature-card" style="text-align:center"><i class="fa-solid fa-shield-heart"></i><h4>Overcome Fears</h4><p>Overcome fears and phobias using the power of your subconscious mind — and much more.</p></div>
-    </div>
+    </div></div>
   </div>
 </section>
 
@@ -862,6 +867,73 @@ document.querySelectorAll('.faq-btn').forEach(function(btn) {
   .during-grid{gap:1.25rem}
   .help-grid{gap:1.25rem}
 }
+
+/* ─── POWER CARDS CAROUSEL – mobile ─── */
+@media(max-width:768px){
+  #powerCarouselWrap .features-grid{
+    display:flex!important;
+    flex-direction:row!important;
+    grid-template-columns:unset!important;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    gap:1.25rem;
+    padding:.5rem 1.5rem 1rem;
+    margin-inline:calc(-1*var(--pad));
+  }
+  #powerCarouselWrap .features-grid::-webkit-scrollbar{display:none}
+  #powerCarouselWrap .feature-card{
+    flex:0 0 min(78vw,280px);
+    scroll-snap-align:center;
+    margin-bottom:0;
+  }
+}
+
+/* ─── iOS / ANDROID GLOBAL FIXES ─── */
+html{
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
+body{
+  -webkit-tap-highlight-color:transparent;
+  overscroll-behavior-y:none;
+}
+/* Safe area insets – iPhone notch / Dynamic Island / home bar */
+.nav{
+  padding-top:env(safe-area-inset-top);
+  padding-left:env(safe-area-inset-left);
+  padding-right:env(safe-area-inset-right);
+}
+.nav__drawer{
+  padding-top:calc(4.5rem + env(safe-area-inset-top));
+  padding-bottom:max(2.5rem, env(safe-area-inset-bottom));
+  padding-left:calc(2rem + env(safe-area-inset-left));
+  padding-right:calc(2rem + env(safe-area-inset-right));
+}
+footer{padding-bottom:env(safe-area-inset-bottom)}
+#cookie-banner{padding-bottom:max(1.25rem, env(safe-area-inset-bottom))}
+
+/* Smooth momentum scrolling everywhere on iOS */
+html,body{-webkit-overflow-scrolling:touch}
+
+/* Prevent font inflation on landscape rotate (Android) */
+@media screen and (orientation:landscape){
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+}
+
+/* Touch-friendly tap targets */
+button,.btn,.lang-btn,.faq-btn,.nav__burger,.carousel-dot{
+  touch-action:manipulation;
+  -webkit-user-select:none;
+  user-select:none;
+}
+
+/* Prevent horizontal page overflow on small screens */
+@media(max-width:768px){
+  body{overflow-x:hidden}
+  .hero__inner,.grid-2,.wherever__text{min-width:0}
+}
 </style>
 
 <script>
@@ -895,42 +967,92 @@ document.querySelectorAll('.faq-btn').forEach(function(btn) {
   });
 })();
 
-// CAROUSEL DOTS
+// CAROUSEL (dots + optional auto-play)
 (function () {
-  function initCarousel(wrapId, itemSelector) {
-    var wrap = document.getElementById(wrapId);
+  /**
+   * @param {string}  wrapId       - id of the .carousel-wrap element
+   * @param {string}  itemSel      - CSS selector for individual cards
+   * @param {number}  [autoMs]     - auto-advance interval in ms (omit to disable)
+   */
+  function initCarousel(wrapId, itemSel, autoMs) {
+    var wrap  = document.getElementById(wrapId);
     if (!wrap) return;
-    var grid = wrap.firstElementChild;
-    var items = Array.from(wrap.querySelectorAll(itemSelector));
+    var grid  = wrap.firstElementChild;
+    var items = Array.from(wrap.querySelectorAll(itemSel));
     if (!items.length) return;
 
+    var cur = 0;
+    var autoTimer = null;
+
+    /* ── dots ── */
     var dotsWrap = document.createElement('div');
     dotsWrap.className = 'carousel-dots';
     var dots = items.map(function (item, i) {
       var dot = document.createElement('button');
       dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
       dot.setAttribute('aria-label', 'Go to item ' + (i + 1));
-      dot.addEventListener('click', function () {
-        item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      });
+      dot.addEventListener('click', function () { stopAuto(); goTo(i); });
       dotsWrap.appendChild(dot);
       return dot;
     });
     wrap.appendChild(dotsWrap);
 
+    /* ── navigation ── */
+    function goTo(idx) {
+      cur = (idx + items.length) % items.length;
+      /* Use scrollTo on the grid for reliable cross-browser behaviour */
+      var target = items[cur];
+      grid.scrollTo({ left: target.offsetLeft - (grid.clientWidth - target.offsetWidth) / 2, behavior: 'smooth' });
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === cur); });
+    }
+
+    /* ── sync dots on manual scroll ── */
+    var scrollDebounce;
     grid.addEventListener('scroll', function () {
-      var center = grid.scrollLeft + grid.clientWidth / 2;
-      var closest = 0, minDist = Infinity;
-      items.forEach(function (item, i) {
-        var dist = Math.abs((item.offsetLeft + item.offsetWidth / 2) - center);
-        if (dist < minDist) { minDist = dist; closest = i; }
-      });
-      dots.forEach(function (d, i) { d.classList.toggle('active', i === closest); });
+      clearTimeout(scrollDebounce);
+      scrollDebounce = setTimeout(function () {
+        var center = grid.scrollLeft + grid.clientWidth / 2;
+        var closest = 0, minDist = Infinity;
+        items.forEach(function (item, i) {
+          var dist = Math.abs((item.offsetLeft + item.offsetWidth / 2) - center);
+          if (dist < minDist) { minDist = dist; closest = i; }
+        });
+        cur = closest;
+        dots.forEach(function (d, i) { d.classList.toggle('active', i === closest); });
+      }, 80);
     }, { passive: true });
+
+    /* ── auto-play ── */
+    function startAuto() {
+      if (!autoMs) return;
+      stopAuto();
+      autoTimer = setInterval(function () { goTo(cur + 1); }, autoMs);
+    }
+    function stopAuto() {
+      clearInterval(autoTimer);
+      autoTimer = null;
+    }
+
+    /* pause on any touch interaction, resume 8 s later */
+    grid.addEventListener('touchstart', function () {
+      stopAuto();
+      setTimeout(startAuto, 8000);
+    }, { passive: true });
+
+    /* pause when tab/app loses focus, resume on return */
+    document.addEventListener('visibilitychange', function () {
+      document.hidden ? stopAuto() : startAuto();
+    });
+
+    startAuto();
   }
 
-  initCarousel('pricingCarouselWrap', '.pricing-card');
-  initCarousel('testimonialsCarouselWrap', '.testimonial');
+  /* pricing & power – dots only (no auto-play) */
+  initCarousel('pricingCarouselWrap',       '.pricing-card');
+  initCarousel('powerCarouselWrap',         '.feature-card');
+
+  /* testimonials – auto-advance every 4 s */
+  initCarousel('testimonialsCarouselWrap',  '.testimonial', 4000);
 })();
 </script>
 
