@@ -280,15 +280,37 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
     </ul>
     <a href="#book" class="btn btn--nav">Book a Session</a>
     <div class="lang-switcher">
-      <button class="lang-btn active">EN</button>
+      <button class="lang-btn active" data-lang="en">EN</button>
       <span class="lang-sep">|</span>
-      <button class="lang-btn">FR</button>
+      <button class="lang-btn" data-lang="fr">FR</button>
       <span class="lang-sep">|</span>
-      <button class="lang-btn">RO</button>
+      <button class="lang-btn" data-lang="ro">RO</button>
     </div>
     <button class="nav__burger" id="burger"><span></span><span></span><span></span></button>
   </div>
 </nav>
+
+<!-- MOBILE NAV DRAWER -->
+<div class="nav__overlay" id="navOverlay"></div>
+<div class="nav__drawer" id="navDrawer" aria-label="Mobile navigation">
+  <ul class="nav__drawer-links" id="navMobileLinks">
+    <li><a href="#about">About RTT</a></li>
+    <li><a href="#help">How I Help</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#meet">About Me</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#testimonials">Testimonials</a></li>
+    <li><a href="#faq">FAQ</a></li>
+  </ul>
+  <a href="#book" id="navMobileBookBtn" class="btn btn--primary nav__drawer-cta">Book a Session</a>
+  <div class="lang-switcher lang-switcher--drawer">
+    <button class="lang-btn" data-lang="en">EN</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <span class="lang-sep">|</span>
+    <button class="lang-btn" data-lang="ro">RO</button>
+  </div>
+</div>
 
 <!-- HERO -->
 <section class="hero">
@@ -331,7 +353,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
 </section>
 
 <!-- POWER OF MIND -->
-<section class="section-pad bg-sage">
+<section class="section-pad bg-sage" id="power">
   <div class="container">
     <div class="section-header center">
       <p class="overline">The Power of Your Mind</p>
@@ -454,7 +476,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
       <h2>Invest in Yourself</h2>
       <p class="section-intro">Every package includes your personalised audio recording, a 21-day listening guide, a check-up after one week, and an evaluation after three weeks.</p>
     </div>
-    <div class="pricing-grid mt-lg">
+    <div class="carousel-wrap" id="pricingCarouselWrap"><div class="pricing-grid mt-lg">
       <div class="pricing-card">
         <div class="pricing-card__header"><h3>1 Session</h3><p class="pricing-card__sub">Single session</p></div>
         <div class="pricing-card__price"><span class="price">€400</span></div>
@@ -494,7 +516,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
         </ul>
         <a href="#book" class="btn btn--primary btn--full">Book Now</a>
       </div>
-    </div>
+    </div></div>
     <p style="text-align:center;font-size:.9rem;color:var(--text-muted);margin-top:2rem">Questions? <a href="mailto:info@atdriveyourmind.com" style="color:var(--sage);text-decoration:underline">info@atdriveyourmind.com</a></p>
   </div>
 </section>
@@ -506,7 +528,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
       <p class="overline">Client Stories</p>
       <h2>What Clients Say</h2>
     </div>
-    <div class="testimonials-grid mt-lg">
+    <div class="carousel-wrap" id="testimonialsCarouselWrap"><div class="testimonials-grid mt-lg">
       <div class="testimonial">
         <div class="testimonial__stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><span>5/5</span></div>
         <p class="testimonial__text">"The session with Angela is heartwarming and her warm voice guides me very calmly, lovingly and naturally to a state of light hypnosis, in which it soon becomes clear where the blockages come from. Very special and moving."</p>
@@ -527,7 +549,7 @@ p{margin-bottom:1rem;color:var(--text)}p:last-child{margin-bottom:0}
         <p class="testimonial__text">"The session concerns a physical situation: a recurring inflammation in my right upper jaw. After a week I notice that the pain calms down. After three weeks the previously inflamed area looks a lot better. I am very surprised."</p>
         <div class="testimonial__author"><strong>Jane H.</strong></div>
       </div>
-    </div>
+    </div></div>
   </div>
 </section>
 
@@ -758,6 +780,860 @@ document.querySelectorAll('.faq-btn').forEach(function(btn) {
     }
   });
 });
+</script>
+
+<style>
+/* ─── MOBILE NAV DRAWER ─── */
+.nav__overlay{display:none;position:fixed;inset:0;background:rgba(30,40,34,.45);z-index:98;backdrop-filter:blur(2px);opacity:0;transition:opacity .3s ease}
+.nav__overlay.open{display:block;opacity:1}
+.nav__drawer{position:fixed;top:0;right:0;bottom:0;width:min(320px,85vw);background:var(--cream);z-index:99;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column;padding:5rem 2rem 2.5rem;box-shadow:-8px 0 40px rgba(0,0,0,.15)}
+.nav__drawer.open{transform:translateX(0)}
+.nav__drawer-links{display:flex;flex-direction:column;gap:.25rem;margin-bottom:2rem}
+.nav__drawer-links li{border-bottom:1px solid var(--border)}
+.nav__drawer-links a{display:block;padding:.9rem .25rem;font-size:1rem;font-weight:500;color:var(--charcoal);transition:color .2s,padding-left .2s}
+.nav__drawer-links a:hover{color:var(--sage);padding-left:.5rem}
+.nav__drawer-cta{width:100%;text-align:center;margin-bottom:1.5rem}
+.lang-switcher--drawer{justify-content:center}
+/* Burger animation */
+.nav__burger span{transition:transform .3s cubic-bezier(.4,0,.2,1),opacity .2s}
+.nav__burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav__burger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
+.nav__burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+/* ─── CAROUSEL ─── */
+.carousel-wrap{position:relative}
+
+/* Pricing carousel – mobile */
+@media(max-width:768px){
+  #pricingCarouselWrap .pricing-grid{
+    display:flex!important;
+    flex-direction:row!important;
+    grid-template-columns:unset!important;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    gap:1.25rem;
+    padding:.5rem 1.5rem 1rem;
+    margin-inline:calc(-1*var(--pad));
+  }
+  #pricingCarouselWrap .pricing-grid::-webkit-scrollbar{display:none}
+  #pricingCarouselWrap .pricing-card{flex:0 0 min(82vw,320px);scroll-snap-align:center}
+  #pricingCarouselWrap .pricing-card--featured{transform:none}
+  /* Testimonials carousel – mobile */
+  #testimonialsCarouselWrap .testimonials-grid{
+    display:flex!important;
+    flex-direction:row!important;
+    grid-template-columns:unset!important;
+    overflow-x:auto;
+    scroll-snap-type:x mandatory;
+    -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+    gap:1.25rem;
+    padding:.5rem 1.5rem 1rem;
+    margin-inline:calc(-1*var(--pad));
+  }
+  #testimonialsCarouselWrap .testimonials-grid::-webkit-scrollbar{display:none}
+  #testimonialsCarouselWrap .testimonial{flex:0 0 min(85vw,380px);scroll-snap-align:center}
+}
+
+/* Carousel dots */
+.carousel-dots{display:none;justify-content:center;gap:.5rem;margin-top:1rem}
+@media(max-width:768px){.carousel-dots{display:flex}}
+.carousel-dot{width:8px;height:8px;border-radius:50%;background:var(--border);border:none;cursor:pointer;padding:0;transition:all .25s;flex-shrink:0}
+.carousel-dot.active{background:var(--sage);transform:scale(1.35)}
+
+/* ─── MOBILE LAYOUT FIXES ─── */
+@media(max-width:768px){
+  /* Hero image height on mobile */
+  .hero__image img{height:300px!important}
+  /* wherever image */
+  .wherever .grid-2>div:first-child img{height:280px!important}
+  /* what-is image */
+  .what-is .grid-2>div:last-child img{height:280px!important}
+  /* meet image */
+  .meet__img img{height:360px!important}
+  /* nav burger gap */
+  .nav__burger span{margin:0}
+  /* book section info items */
+  #book>div>div:nth-child(2){flex-direction:column;align-items:flex-start;gap:1rem}
+}
+@media(max-width:480px){
+  .during-grid{gap:1.25rem}
+  .help-grid{gap:1.25rem}
+}
+</style>
+
+<script>
+// MOBILE NAV
+(function () {
+  var burger = document.getElementById('burger');
+  var drawer = document.getElementById('navDrawer');
+  var overlay = document.getElementById('navOverlay');
+
+  function openNav() {
+    drawer.classList.add('open');
+    overlay.classList.add('open');
+    burger.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeNav() {
+    drawer.classList.remove('open');
+    overlay.classList.remove('open');
+    burger.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  if (burger) burger.addEventListener('click', function () {
+    drawer.classList.contains('open') ? closeNav() : openNav();
+  });
+  if (overlay) overlay.addEventListener('click', closeNav);
+
+  // Close drawer on link click
+  document.querySelectorAll('.nav__drawer-links a, .nav__drawer-cta').forEach(function (a) {
+    a.addEventListener('click', closeNav);
+  });
+})();
+
+// CAROUSEL DOTS
+(function () {
+  function initCarousel(wrapId, itemSelector) {
+    var wrap = document.getElementById(wrapId);
+    if (!wrap) return;
+    var grid = wrap.firstElementChild;
+    var items = Array.from(wrap.querySelectorAll(itemSelector));
+    if (!items.length) return;
+
+    var dotsWrap = document.createElement('div');
+    dotsWrap.className = 'carousel-dots';
+    var dots = items.map(function (item, i) {
+      var dot = document.createElement('button');
+      dot.className = 'carousel-dot' + (i === 0 ? ' active' : '');
+      dot.setAttribute('aria-label', 'Go to item ' + (i + 1));
+      dot.addEventListener('click', function () {
+        item.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+      });
+      dotsWrap.appendChild(dot);
+      return dot;
+    });
+    wrap.appendChild(dotsWrap);
+
+    grid.addEventListener('scroll', function () {
+      var center = grid.scrollLeft + grid.clientWidth / 2;
+      var closest = 0, minDist = Infinity;
+      items.forEach(function (item, i) {
+        var dist = Math.abs((item.offsetLeft + item.offsetWidth / 2) - center);
+        if (dist < minDist) { minDist = dist; closest = i; }
+      });
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === closest); });
+    }, { passive: true });
+  }
+
+  initCarousel('pricingCarouselWrap', '.pricing-card');
+  initCarousel('testimonialsCarouselWrap', '.testimonial');
+})();
+</script>
+
+<script>
+// LANGUAGE SWITCHER
+(function () {
+  var T = {
+    en: {
+      nav: {
+        links: ['About RTT', 'How I Help', 'Process', 'About Me', 'Pricing', 'Testimonials', 'FAQ'],
+        bookBtn: 'Book a Session',
+        exploreLinks: ['About RTT', 'How I Help', 'Process', 'About Me', 'Pricing', 'FAQ']
+      },
+      hero: {
+        overline: 'RTT Therapist &amp; Coach',
+        sub: "Whoever you are, wherever you are, you might encounter various frustrations and limits along your way. It's about being open, learn to look at them without judgment, and transform them. Because you can.",
+        body: "I'm here to help you drive your mind to the core of the problem, find it, and change the course of your life. Fast paced. Efficient. Focused. Now you can drive towards new and brighter paths.",
+        cta1: 'Book a Free Discovery Call',
+        cta2: 'Learn More'
+      },
+      wherever: {
+        overline: 'What does a session look like?',
+        h2: 'I help you<br/>help yourself.',
+        p1: "If you are stressed or anxious, if you have doubts about the future of a relationship, or you just feel that you are not living the life you should be living, I'm here to provide you with a solution. With the help of Rapid Transformational Therapy you are quickly and permanently free of the blocks and limitations that hold you back.",
+        howTitle: "Here's how it works:",
+        steps: [
+          'We formulate a clear goal together.',
+          'I guide you with the help of hypnosis to a place inside yourself, which you cannot easily reach with your daily consciousness.',
+          "I'm here to ask you questions that no one else is asking."
+        ],
+        p2: 'With RTT you create space for a new story very directly and accurately.'
+      },
+      power: {
+        overline: 'The Power of Your Mind',
+        h2: 'Are you running into blockages?',
+        intro: 'Our mind always drives us to what is familiar, and will try to keep us away from what is unfamiliar. This explains why we always fall back into old patterns. With RTT, we discover the reason behind those patterns, break the connection, and create a new positive pattern that works for you.',
+        cards: [
+          { title: 'Breaking Limiting Patterns', desc: 'Break limiting habits and patterns, perform better and achieve results in work and relationships.' },
+          { title: 'Focus &amp; Motivation', desc: 'Improve focus and motivation, relieve stress, and move forward with clarity and confidence.' },
+          { title: 'Overcome Fears', desc: 'Overcome fears and phobias using the power of your subconscious mind — and much more.' }
+        ]
+      },
+      discover: {
+        overline: 'Discover',
+        h2: 'What is Rapid Transformational Therapy?',
+        intro: "Rapid Transformational Therapy (RTT) is a one-of-a-kind method, developed by British hypnotherapist Marisa Peer. This method is certainly 'Rapid' and 'Transformational', because special results are achieved in a short time.",
+        copy: [
+          'RTT can save you hours and in most cases even years of talk therapy and coaching. Through hypnosis you learn to work with your subconscious mind and to detect old blockages. In this way you can clear and transform that which no longer serves you.',
+          'RTT makes you super grounded – and at the same time, new avenues open up. You make new choices that deep down you know are right. Who do you want to be? RTT gives you back the freedom to choose for yourself.',
+          'This revolutionary, highly efficient and effective stand-alone therapy is a perfect fit for our fast-paced lifestyle and the rapidly changing world we live in today.'
+        ],
+        cards: [
+          { title: 'Results in One Session', desc: 'One session delivers exceptional results and frees you from unwanted habits and limiting beliefs deeply rooted in your subconscious.' },
+          { title: 'Eliminate the Cause', desc: 'Most problems arise from the meaning you gave to events as a child. We go to the root — not just the symptoms.' },
+          { title: 'The Power of Hypnosis', desc: 'Through hypnosis we work with your subconscious brain to remove the patterns and blockages. You are always fully aware and in control.' },
+          { title: 'Super Grounded', desc: 'RTT makes you grounded and at the same time opens new avenues. You make new choices aligned with who you truly want to be.' }
+        ]
+      },
+      help: {
+        overline: 'Themes',
+        h2: 'What can you use RTT for?',
+        intro: 'You can use RTT for the most diverse themes — physical health, mental health, relationships, and performance.',
+        cards: [
+          { subcat: 'Physical Health', title: 'Weight Control &amp; Eating', desc: 'Weight control, Anorexia &amp; Bulimia — unhealthy relationship with food and body image.' },
+          { subcat: 'Physical Health', title: 'Sleep, Healing &amp; Pain', desc: 'Sleep problems, Cellular Regeneration and Healing, and Pain management.' },
+          { subcat: 'Physical Health', title: 'Fertility &amp; Conception', desc: 'Fertility, Conception, and Hypno-birthing support.' },
+          { subcat: 'Mental Health', title: 'Self-Confidence', desc: 'Self-confidence and self-esteem, imposter syndrome, and people pleasing.' },
+          { subcat: 'Mental Health', title: 'Anxiety, Phobias &amp; Stress', desc: 'Anxiety, Phobias, Stress and Burnout — constant worry, overwhelm and nervous tension.' },
+          { subcat: 'Mental Health', title: 'Depression, Guilt &amp; Addictions', desc: 'Depression, Guilt and Shame, Compulsive behavior, and Addictions.' },
+          { subcat: 'Relationships', title: 'Love &amp; Relationships', desc: 'Attracting and maintaining love relationships, Relationship Conflicts, and Family Conflicts.' },
+          { subcat: 'Performance', title: 'Performance &amp; Goals', desc: 'Motivation, public speaking, fear of exams, fear of failure, following your goals, and memory improvement.' },
+          { subcat: 'Performance', title: 'Team Motivation', desc: 'Team motivation and success — supporting your team to perform, collaborate, and thrive.' }
+        ]
+      },
+      process: {
+        overline: 'Method',
+        h2: 'The RTT Process',
+        intro: 'An RTT process has different phases, which together cover about four weeks. Afterwards, you look differently at yourself and at life in general.',
+        steps: [
+          { title: 'Intake', desc: 'A free 30-minute discovery call to get to know each other and formulate a clear goal.' },
+          { title: 'Therapy Session', desc: 'Online, in the comfort of your home. Reserve 1.5–2 hours for this appointment.' },
+          { title: 'Customised Audio', desc: 'A personalised 15-minute audio recording — your new story, your new programme. Listen daily for 3 weeks.' },
+          { title: 'Check-up', desc: 'After a week we discuss how things are going. You can always reach out in between.' },
+          { title: 'Evaluation', desc: 'After three weeks we see what has permanently changed and what your life looks like now.' }
+        ]
+      },
+      during: {
+        overline: 'Session Content',
+        h2: 'What Happens During a Session',
+        intro: 'A session with RTT has three clear steps. Here is what the experience looks like from start to finish.',
+        cards: [
+          { title: 'Step 1: Identify the Cause', desc: 'After a short induction into hypnosis — a very deep relaxation — I guide you to identify the cause of your behaviour or problem. You are not sleeping, but very relaxed and aware.' },
+          { title: 'Step 2: Interrupt the Pattern', desc: 'Once we find the cause, you are immediately set free. With the powerful techniques of RTT I reprogram your brain with tailor-made positive commands.' },
+          { title: 'Step 3: Install Positive Beliefs', desc: 'The last part is a hypnotic transformation I record and give to you after the session, so you can listen to it at least once a day for the next 21 days.' }
+        ]
+      },
+      meet: {
+        overline: 'About',
+        h2: 'Nice to meet you!',
+        p: [
+          "I'm Angela, I live in both France and The Netherlands, and I share this wonderful adventure with my dog Mya, the most amazing furry family.",
+          'I\'ve always had an interest in psychology, and after 20 years spent in corporate environments, spinning on the same wheel with no finish line in sight, I felt it was time to change the narrative. My narrative. So, in the middle of a world pandemic I asked myself the most important question yet: <em>"how can I drive my life towards the path I really want to follow?"</em>',
+          'This is how I discovered Rapid Transformational Therapy (RTT). The method is revolutionary because it breaks with various conventions — RTT proves that change can be done differently, because by working directly with the subconscious, rapid changes are possible.'
+        ],
+        cta: 'Work With Me'
+      },
+      pricing: {
+        overline: 'Investment',
+        h2: 'Invest in Yourself',
+        intro: 'Every package includes your personalised audio recording, a 21-day listening guide, a check-up after one week, and an evaluation after three weeks.',
+        questions: 'Questions?'
+      },
+      testimonials: {
+        overline: 'Client Stories',
+        h2: 'What Clients Say'
+      },
+      faq: {
+        overline: 'Your Questions Answered',
+        h2: 'Frequently Asked Questions',
+        intro: "Still not sure? That's completely fine. Here are the things people usually ask before we begin.",
+        items: [
+          { q: 'What is Hypnosis?', a: 'Hypnosis is an open state of mind. It is a natural phenomenon, often described as a deep state of relaxation and concentration. During hypnosis you do not sleep and you are not unconscious. It is a positive state, also called a hypnotic state or state of creative relaxation.' },
+          { q: 'How does hypnosis work?', a: 'During the session I gently guide you to a state of deep relaxation. Once you are completely relaxed, we focus on what you need help with. You let yourself be carried away with my flow of words, instructions and different mental exercises — specially designed to help you achieve positive change.' },
+          { q: 'How many sessions will I need?', a: "For nine out of ten clients, one session is enough to make a real shift. Some come back after a while — not because the first one didn't work, but because once you've experienced what's possible, you get curious about what else is there." },
+          { q: 'How is RTT different from traditional therapy?', a: 'Traditional therapy often works with the conscious mind — talking through the same problem week after week. RTT goes directly to the subconscious, where the pattern actually lives. That\'s why it can save you, in many cases, years of talk therapy.' },
+          { q: 'Can RTT be done online?', a: 'Completely. Online sessions work just as well — and most clients actually prefer being in their own space. All you need is somewhere quiet, a decent internet connection, and headphones.' }
+        ]
+      },
+      book: {
+        overline: 'Get Started',
+        h2: 'Book a free discovery call',
+        intro: "Not sure if RTT is right for you? Let's find out together. A free 30-minute conversation — no commitment, no pressure.",
+        time: '90–120 minutes',
+        timeLabel: 'Per RTT session',
+        emailLabel: 'Get in touch',
+        langs: 'EN · FR · RO',
+        langsLabel: 'Sessions available in',
+        bookBtn: 'Book Your Appointment'
+      },
+      footer: {
+        desc: 'RTT Therapist &amp; Coach. Helping you find what\'s in the way — and change it. In French, English and Romanian.',
+        exploreTitle: 'Explore',
+        exploreLinks: ['About RTT', 'How I Help', 'Process', 'About Me', 'Pricing', 'FAQ'],
+        supportTitle: 'Support',
+        supportLinks: ['FAQs', 'Privacy Policy', 'Terms &amp; Conditions', 'Disclaimer'],
+        contactTitle: 'Get in Touch',
+        bookCallBtn: 'Book a Free Call',
+        copyright: '© 2026 AtDriveYourMind. All rights reserved.',
+        member: 'Member of the RTT Alumni Association. Fully insured.'
+      },
+      cookie: {
+        title: 'We use cookies',
+        desc: 'We use functional, analytical and tracking cookies to improve your experience. By clicking <strong>Accept</strong> you consent to our use of cookies. Read our <a href="#" style="color:var(--sage);text-decoration:underline">Privacy Policy</a> for details.',
+        decline: 'Decline',
+        accept: 'Accept'
+      }
+    },
+
+    fr: {
+      nav: {
+        links: ["À propos de la RTT", "Comment j'aide", 'Méthode', 'À propos', 'Investissement', 'Témoignages', 'FAQ'],
+        bookBtn: 'Réserver une session',
+        exploreLinks: ["À propos de la RTT", "Comment j'aide", 'Méthode', 'À propos', 'Investissement', 'FAQ']
+      },
+      hero: {
+        overline: 'Thérapeute RTT &amp; Coach',
+        sub: "Qui que vous soyez, où que vous soyez, vous rencontrerez de nombreuses frustrations et limites sur votre route. Il s'agit de garder son esprit ouvert et les regarder sans jugement, pour les transformer. Car vous pouvez.",
+        body: "Je suis là pour vous guider à conduire votre mental vers de nouveaux chemins, transformer vos blocages subconscients et anciens formatages en nouvelles possibilités.",
+        cta1: 'Réservez un appel découverte gratuit',
+        cta2: 'En savoir plus'
+      },
+      wherever: {
+        overline: 'Comment se déroule une session ?',
+        h2: 'Je vous aide<br/>à vous aider.',
+        p1: "Si vous êtes stressé(e) ou anxieux(se), si vous avez des doutes sur vos relations, ou vous sentez que vous ne vous retrouvez plus dans votre vie, je suis là pour trouver une solution. Avec la Thérapie Transformationnelle Rapide vous êtes vite et d'une façon permanente libéré(e) des limites et blocages qui vous empêchent d'avancer.",
+        howTitle: 'Les pas à prendre :',
+        steps: [
+          'Nous définissons ensemble le but précis que vous souhaitez atteindre.',
+          "Je vous guide avec l'hypnose envers l'endroit dans votre sous-conscient que vous n'arrivez pas à atteindre.",
+          'Je vous pose des questions essentielles.'
+        ],
+        p2: 'De cette façon vous verrez très clairement quoi, comment, et quand vous avez acquis ces pensées limitatives et ces blocages.'
+      },
+      power: {
+        overline: 'Le Pouvoir de Votre Mental',
+        h2: 'Rencontrez-vous des blocages ?',
+        intro: "Notre esprit nous conduit toujours vers ce qui nous est familier et tentera de nous éloigner de ce qui ne l'est pas. Cela explique pourquoi nous retombons toujours dans les anciens schémas. Avec la RTT, nous découvrons la raison de ces anciens schémas, brisons la connexion et créons un nouveau schéma positif qui fonctionne pour vous.",
+        cards: [
+          { title: 'Dépasser ses Limites', desc: "Dépasser vos limites et changer les fonctionnements anciens, être plus motivé(e) et avoir de meilleurs résultats." },
+          { title: 'Focus &amp; Motivation', desc: "Améliorer votre concentration et motivation, éliminer le stress, avancer avec clarté et confiance." },
+          { title: 'Surmonter ses Peurs', desc: "Éliminer vos peurs et phobies en utilisant le pouvoir de votre subconscient — et bien plus encore." }
+        ]
+      },
+      discover: {
+        overline: 'Découvrir',
+        h2: "Qu'est-ce que la Thérapie Transformationnelle Rapide ?",
+        intro: "La Thérapie Transformationnelle Rapide est une méthode unique, fondée par l'hypnothérapeute britannique Marisa Peer. Cette méthode est certainement Rapide et Transformationnelle car les résultats sont obtenus en très peu de temps.",
+        copy: [
+          "C'est en effet le but de cette méthode : de ne pas devoir attendre des mois ou des années avant d'obtenir des résultats. Cette méthode agit au cœur du problème, efficacement.",
+          "À travers l'hypnose, vous apprenez à travailler avec votre subconscient pour trouver les blocages. Une fois trouvés, vous apprenez à les transformer, à leur donner un autre sens qui vous sert dans votre présent.",
+          "Cette méthode révolutionnaire est parfaitement adaptée à notre style de vie rapide et au monde en constante évolution dans lequel nous vivons aujourd'hui."
+        ],
+        cards: [
+          { title: 'Résultats en une session', desc: "Une session offre déjà des résultats exceptionnels et vous libère d'anciens comportements et croyances limitatives encrées dans votre subconscient." },
+          { title: 'Éliminer la cause', desc: "La plupart des problèmes ont pour cause l'interprétation que vous avez donnée aux événements dans votre vie, en tant qu'enfant ou jeune adulte." },
+          { title: "Le Pouvoir de l'Hypnose", desc: "Avec l'hypnose, nous travaillons directement avec votre subconscient pour trouver et changer les anciennes pensées. Vous êtes toujours conscient(e) et en contrôle." },
+          { title: 'Ancré(e) et Libre', desc: "La RTT vous rend très conscient(e) de votre pouvoir et vous ouvre d'autres chemins pour le présent et le futur." }
+        ]
+      },
+      help: {
+        overline: 'Thèmes',
+        h2: 'À quoi sert la Thérapie Transformationnelle Rapide ?',
+        intro: "Vous pouvez utiliser la RTT pour les thèmes les plus divers — santé physique, santé mentale, relations et performance.",
+        cards: [
+          { subcat: 'Santé Physique', title: 'Contrôle du Poids', desc: "Contrôle du poids, Anorexie &amp; Boulimie — relation malsaine avec la nourriture et l'image corporelle." },
+          { subcat: 'Santé Physique', title: 'Sommeil, Guérison &amp; Douleur', desc: "Manque de sommeil et fatigue chronique, Régénération cellulaire et guérison, Contrôle des douleurs." },
+          { subcat: 'Santé Physique', title: 'Fertilité &amp; Conception', desc: "Fertilité, Conception, et Naissance sous hypnose." },
+          { subcat: 'Santé Mentale', title: 'Confiance en Soi', desc: "Confiance en soi et estime de soi, syndrome de l'imposteur et désir de plaire aux autres." },
+          { subcat: 'Santé Mentale', title: 'Anxiété, Phobies &amp; Stress', desc: "Anxiétés &amp; Phobies, Stress &amp; Fatigue psychique — inquiétude constante et nervosité." },
+          { subcat: 'Santé Mentale', title: 'Dépression, Culpabilité &amp; Dépendances', desc: "Dépression, Culpabilité et Pudeur, Comportement compulsif, et Dépendances." },
+          { subcat: 'Relations', title: 'Amour &amp; Relations', desc: "Attirer et garder des relations amoureuses, Conflits relationnels, et Conflits familiaux." },
+          { subcat: 'Performance', title: 'Performance &amp; Objectifs', desc: "Motivation individuelle, parler en public, peur de l'échec, atteindre des objectifs et améliorer la mémoire." },
+          { subcat: 'Performance', title: "Motivation d'Équipe", desc: "Motivation individuelle &amp; d'équipe — soutenir votre équipe pour performer, collaborer et s'épanouir." }
+        ]
+      },
+      process: {
+        overline: 'Méthode',
+        h2: 'La Méthode RTT',
+        intro: "La Thérapie Transformationnelle Rapide se déroule en plusieurs phases, sur quatre semaines. Au bout de ce processus, votre regard sur vous-même et sur la vie en général va changer.",
+        steps: [
+          { title: 'Consultation', desc: "Un appel découverte gratuit de 30 minutes pour faire connaissance et définir un objectif clair." },
+          { title: 'Session de Thérapie', desc: "En ligne, dans le confort de votre maison. La durée habituelle est de 1h30–2h." },
+          { title: 'Audio sur Mesure', desc: "Un audio de 15 minutes personnalisé — votre nouvelle histoire, votre nouveau programme. À écouter chaque jour pendant 3 semaines." },
+          { title: 'Check-up', desc: "Nous serons en contact à nouveau une semaine plus tard pour voir comment se déroulent les choses." },
+          { title: 'Évaluation', desc: "Après trois semaines, nous discutons à nouveau pour voir ce qui a changé d'une façon permanente." }
+        ]
+      },
+      during: {
+        overline: 'Contenu de la Session',
+        h2: 'Ce qui se passe pendant une Session',
+        intro: "Une session de RTT se déroule en trois étapes claires. Voici à quoi ressemble l'expérience du début à la fin.",
+        cards: [
+          { title: "Premier pas : Identifier la cause", desc: "Après une courte induction dans l'hypnose — un état de profonde relaxation — je vous guide vers l'origine de votre problème. Vous êtes conscient(e) et entièrement en contrôle." },
+          { title: "Deuxième pas : Interrompre le lien", desc: "Une fois la cause trouvée, vous serez immédiatement libéré(e). À l'aide de cette méthode très efficace, votre cerveau recevra une mise à jour et sera reprogrammé avec de nouvelles convictions." },
+          { title: "Troisième pas : Installer des pensées positives", desc: "La dernière partie consiste en une transformation hypnotique enregistrée que vous pouvez écouter pendant les trois semaines suivantes." }
+        ]
+      },
+      meet: {
+        overline: 'À Propos',
+        h2: 'Enchantée !',
+        p: [
+          "Je suis Angela, je vis entre la France et les Pays-Bas, et je partage cette aventure avec mon chien Mya, qui fait partie de ma famille depuis 7 ans.",
+          "J'ai toujours eu un grand intérêt envers la psychologie, et après plus de 20 ans passés dans des milieux corporatistes, tournant en rond sans vrai but, j'ai senti qu'il était grand temps de changer ma vie. Donc, en plein milieu d'une pandémie mondiale, je me suis posé la plus importante question : <em>« comment je peux conduire ma vie envers cette route que je veux suivre ? »</em>",
+          "C'est ainsi que j'ai découvert la RTT. La méthode est révolutionnaire car elle rompt avec diverses conventions — parce qu'en travaillant directement avec le subconscient, des changements rapides sont possibles."
+        ],
+        cta: 'Travailler Avec Moi'
+      },
+      pricing: {
+        overline: 'Investissement',
+        h2: 'Investissez en Vous-Même',
+        intro: "Chaque forfait comprend votre enregistrement audio personnalisé, un guide d'écoute de 21 jours, un check-up après une semaine et une évaluation après trois semaines.",
+        questions: 'Questions ?'
+      },
+      testimonials: {
+        overline: 'Témoignages',
+        h2: 'Ce que disent les clients'
+      },
+      faq: {
+        overline: 'Vos Questions',
+        h2: 'Questions Fréquentes',
+        intro: "Pas encore sûr(e) ? C'est tout à fait normal. Voici les questions que les gens posent habituellement avant de commencer.",
+        items: [
+          { q: "Qu'est-ce que l'Hypnose ?", a: "L'hypnose est un état d'esprit ouvert. C'est un phénomène naturel, souvent décrit comme un état profond de relaxation et de concentration. Pendant l'hypnose, vous ne dormez pas et vous n'êtes pas inconscient. C'est un état positif, également appelé état hypnotique ou état de relaxation créative." },
+          { q: "Comment fonctionne l'hypnose ?", a: "Pendant la séance, je vous guide en douceur vers un état de relaxation profonde. Une fois que vous êtes complètement détendu(e), nous nous concentrons sur ce pour quoi vous avez besoin d'aide. Vous vous laissez emporter par mon flot de mots et les différents exercices mentaux." },
+          { q: 'Combien de sessions seront nécessaires ?', a: "Pour neuf clients sur dix, une session suffit pour changer fondamentalement. Certains clients reviennent pour d'autres sessions simplement parce qu'ils ont découvert l'énorme potentiel de leur sous-conscient." },
+          { q: 'En quoi la RTT diffère-t-elle de la thérapie traditionnelle ?', a: "La thérapie traditionnelle travaille souvent avec l'esprit conscient — parler du même problème semaine après semaine. La RTT va directement au subconscient, là où le schéma existe réellement. C'est pourquoi elle peut vous économiser des années de thérapie." },
+          { q: 'La RTT peut-elle se faire en ligne ?', a: "Complètement. Les sessions en ligne fonctionnent tout aussi bien — et la plupart des clients préfèrent être dans leur propre espace. Vous avez juste besoin d'un endroit calme, d'une connexion internet décente et d'écouteurs." }
+        ]
+      },
+      book: {
+        overline: 'Commencer',
+        h2: 'Réservez un appel découverte gratuit',
+        intro: "Pas sûr(e) si la RTT est faite pour vous ? Découvrons-le ensemble. Une conversation gratuite de 30 minutes — sans engagement, sans pression.",
+        time: '90–120 minutes',
+        timeLabel: 'Par session RTT',
+        emailLabel: 'Contactez-moi',
+        langs: 'FR · EN · RO',
+        langsLabel: 'Sessions disponibles en',
+        bookBtn: 'Réserver votre rendez-vous'
+      },
+      footer: {
+        desc: 'Thérapeute RTT &amp; Coach. Je vous aide à trouver ce qui bloque — et à le changer. En français, anglais et roumain.',
+        exploreTitle: 'Explorer',
+        exploreLinks: ["À propos de la RTT", "Comment j'aide", 'Méthode', 'À propos', 'Investissement', 'FAQ'],
+        supportTitle: 'Support',
+        supportLinks: ['FAQ', 'Politique de Confidentialité', 'Conditions Générales', 'Avertissement'],
+        contactTitle: 'Contactez-moi',
+        bookCallBtn: 'Appel Gratuit',
+        copyright: '© 2026 AtDriveYourMind. Tous droits réservés.',
+        member: "Membre de l'Association des Anciens RTT. Entièrement assuré(e)."
+      },
+      cookie: {
+        title: 'Nous utilisons des cookies',
+        desc: 'Nous utilisons des cookies fonctionnels, analytiques et de suivi pour améliorer votre expérience. En cliquant sur <strong>Accepter</strong>, vous consentez à l\'utilisation de cookies. Lisez notre <a href="#" style="color:var(--sage);text-decoration:underline">Politique de Confidentialité</a> pour plus de détails.',
+        decline: 'Refuser',
+        accept: 'Accepter'
+      }
+    },
+
+    ro: {
+      nav: {
+        links: ['Despre RTT', 'Cum ajut', 'Metodă', 'Despre mine', 'Prețuri', 'Testimoniale', 'FAQ'],
+        bookBtn: 'Rezervați o sesiune',
+        exploreLinks: ['Despre RTT', 'Cum ajut', 'Metodă', 'Despre mine', 'Prețuri', 'FAQ']
+      },
+      hero: {
+        overline: 'Terapeut RTT &amp; Coach',
+        sub: "Oricine ați fi, oriunde v-ați afla, s-ar putea să întâlniți diverse frustrări și limite pe drumul vostru. Ideea este despre a fi deschis, a învăța să le privim fără judecată și a le transforma. Pentru că e posibil.",
+        body: "Sunt aici pentru a vă ajuta să vă conduceți mintea spre miezul problemei, să o găsiți și să vă schimbați cursul vieții. Rapid. Eficient. Durabil.",
+        cta1: 'Rezervați un apel gratuit de descoperire',
+        cta2: 'Aflați mai multe'
+      },
+      wherever: {
+        overline: 'Cum arată o sesiune?',
+        h2: 'Vă ajut<br/>să vă ajutați.',
+        p1: "Dacă sunteți stresat(ă) sau anxios(oasă), dacă aveți îndoieli cu privire la viitorul unei relații sau pur și simplu simțiți că nu trăiți viața pe care o doriți, sunt aici pentru a vă oferi o soluție. Cu ajutorul Terapiei de Transformare Rapidă sunteți eliberat(ă) rapid și permanent de blocajele și limitările care vă rețin.",
+        howTitle: 'Iată cum funcționează:',
+        steps: [
+          'Formulăm împreună un obiectiv clar.',
+          'Vă ghidez cu ajutorul hipnozei către un loc din interiorul minții, la care nu ajungeți ușor folosind doar conștiința zilnică.',
+          'Sunt aici să vă pun întrebări pe care nimeni altcineva nu le întreabă.'
+        ],
+        p2: 'În acest fel, veți vedea clar ce anume, cum și când s-au instalat credințele și tiparele limitative.'
+      },
+      power: {
+        overline: 'Puterea Minții Tale',
+        h2: 'Vă întâlniți cu blocaje?',
+        intro: "Mintea noastră ne conduce întotdeauna către ceea ce ne este familiar și va încerca să ne țină departe de ceea ce nu ne este familiar. Aceasta explică de ce revenim mereu la vechile modele. Cu RTT, vom descoperi motivele din spatele acestor modele, vom întrerupe legătura și vom crea un nou model pozitiv care funcționează pentru dvs.",
+        cards: [
+          { title: 'Depășirea Tiparelor Limitative', desc: 'Întreruperea obiceiurilor și tiparelor limitative, creșterea performanțelor și obținerea rezultatelor așteptate.' },
+          { title: 'Concentrare &amp; Motivație', desc: 'Îmbunătățirea concentrării și motivației, reducerea stresului și avansarea cu claritate și încredere.' },
+          { title: 'Depășirea Fricilor', desc: 'Depășirea fricilor și fobiilor folosind puterea subconștientului — și mult mai multe.' }
+        ]
+      },
+      discover: {
+        overline: 'Descoperă',
+        h2: 'Ce este Terapia de Transformare Rapidă?',
+        intro: 'Terapia rapidă de transformare (RTT) este o metodă unică, dezvoltată de hipnoterapeutul britanic Marissa Peer. Această metodă este cu siguranță „Rapidă" și „Transformațională", deoarece se obțin rezultate deosebite într-un timp scurt.',
+        copy: [
+          'RTT vă poate economisi ore și, în majoritatea cazurilor, chiar ani de terapie prin vorbire și coaching. Prin hipnoză învățați să lucrați cu subconștientul și să detectați blocajele vechi.',
+          'RTT vă deschide orizontul — și, în același timp, se deschid căi noi. Faceți noi alegeri despre care sunteți convins că sunt cele corecte. Cine vreți să fiți? RTT vă oferă libertatea de a alege.',
+          'Această terapie autonomă revoluționară, extrem de eficientă, se potrivește perfect pentru stilul nostru de viață rapid în lumea aflată în schimbare constantă.'
+        ],
+        cards: [
+          { title: 'Rezultate într-o singură sesiune', desc: 'O singură sesiune oferă rezultate excepționale și vă eliberează de obiceiurile nedorite și convingerile limitative adânc înrădăcinate în subconștient.' },
+          { title: 'Eliminați cauza', desc: 'Cele mai multe dintre probleme apar datorită sensului pe care l-ați dat evenimentelor din viață, în copilărie sau adolescență.' },
+          { title: 'Puterea hipnozei', desc: 'Prin hipnoză putem lucra cu creierul subconștient pentru a elimina tiparele și blocajele. Sunteți întotdeauna conștient(ă) și în control.' },
+          { title: 'Echilibrat(ă) și Liber(ă)', desc: 'RTT vă face echilibrat(ă) și, în același timp, deschide noi căi. Faceți alegeri noi aliniate cu cine doriți cu adevărat să fiți.' }
+        ]
+      },
+      help: {
+        overline: 'Teme',
+        h2: 'Pentru ce puteți folosi RTT?',
+        intro: 'Puteți utiliza RTT pentru cele mai diverse teme — sănătate fizică, sănătate mintală, relații și performanță.',
+        cards: [
+          { subcat: 'Sănătate Fizică', title: 'Controlul Greutății', desc: 'Controlul greutății, Anorexie și Bulimie — relație nesănătoasă cu mâncarea și imaginea corporală.' },
+          { subcat: 'Sănătate Fizică', title: 'Somn, Vindecare &amp; Durere', desc: 'Probleme cu somnul, Regenerare și Vindecare celulară, și Managementul durerii.' },
+          { subcat: 'Sănătate Fizică', title: 'Fertilitate &amp; Concepție', desc: 'Fertilitate, Concepție, și suport Hipno-naștere.' },
+          { subcat: 'Sănătate Mintală', title: 'Încredere în Sine', desc: 'Încredere în sine și stima de sine, sindromul impostorului și dorința de a fi pe placul altora.' },
+          { subcat: 'Sănătate Mintală', title: 'Anxietate, Fobii &amp; Stres', desc: 'Anxietate și fobii, Stres și epuizare — îngrijorare constantă și tensiune nervoasă.' },
+          { subcat: 'Sănătate Mintală', title: 'Depresie, Vină &amp; Dependențe', desc: 'Depresie, Vină și rușine, Comportament compulsiv, și Dependențe.' },
+          { subcat: 'Relații', title: 'Dragoste &amp; Relații', desc: 'Atragerea și menținerea unei relații de dragoste, Conflicte în relații, și Conflicte familiale.' },
+          { subcat: 'Performanță', title: 'Performanță &amp; Obiective', desc: 'Motivație, vorbit în public, frica de examene, frica de eșec, atingerea obiectivelor și îmbunătățirea memoriei.' },
+          { subcat: 'Performanță', title: 'Motivația Echipei', desc: 'Motivația și succesul echipei — sprijinind echipa să performeze, să colaboreze și să se dezvolte.' }
+        ]
+      },
+      process: {
+        overline: 'Metodă',
+        h2: 'Metoda RTT',
+        intro: 'Metoda RTT are diferite faze, care împreună acoperă aproximativ patru săptămâni. Ulterior, vă veți privi diferit pe dvs. înșivă și viața în general.',
+        steps: [
+          { title: 'Admisia', desc: 'Un apel de descoperire gratuit de 30 de minute pentru a ne cunoaște și a formula un obiectiv clar și măsurabil.' },
+          { title: 'Sesiunea de Terapie', desc: 'Online, în confortul casei dvs. Rezervați în agendă două ore (în medie 1,5 ore) pentru această întâlnire.' },
+          { title: 'Audio Personalizat', desc: 'Un audio de 15 minute, special adaptat — noua poveste, noul program, pe care îl ascultați în fiecare zi, timp de trei săptămâni.' },
+          { title: 'Verificarea', desc: 'După o săptămână vom lua legătura pentru a discuta despre cum merg lucrurile. Puteți oricând să-mi trimiteți un mesaj.' },
+          { title: 'Evaluarea', desc: 'După trei săptămâni vom discuta din nou și vom vedea ce s-a schimbat permanent și cum arată viața acum.' }
+        ]
+      },
+      during: {
+        overline: 'Conținutul Sesiunii',
+        h2: 'Ce se întâmplă în timpul unei Sesiuni',
+        intro: 'O sesiune RTT are trei pași clari. Iată cum arată experiența de la început până la sfârșit.',
+        cards: [
+          { title: 'Pasul 1: Identificați cauza', desc: 'După o scurtă inducție în hipnoză — o relaxare foarte profundă — vă ghidez să identificați cauza comportamentului sau problemei. Nu dormiți, dar sunteți foarte relaxat(ă) și conștient(ă).' },
+          { title: 'Pasul 2: Întrerupeți modelul', desc: 'Odată ce găsim cauza, veți fi imediat eliberat(ă). Cu tehnicile puternice ale RTT, voi oferi subconștientului o „actualizare" și vă voi reprograma creierul cu comenzi pozitive personalizate.' },
+          { title: 'Pasul 3: Instalați convingeri pozitive', desc: 'Ultima parte constă într-o transformare hipnotică pe care o înregistrez și v-o ofer după ședință, astfel încât să o puteți asculta cel puțin o dată pe zi în următoarele 21 de zile.' }
+        ]
+      },
+      meet: {
+        overline: 'Despre Mine',
+        h2: 'Încântată de cunoștință!',
+        p: [
+          'Sunt Angela, locuiesc atât în Franța, cât și în Țările de Jos și împărtășesc această aventură minunată cu câinele meu Mya, cea mai uimitoare familie cu blană.',
+          'Întotdeauna am fost interesată de psihologie și, după 20 de ani petrecuți în medii corporative, învârtindu-mă pe aceeași roată fără linie de sosire, am simțit că este timpul să schimb povestea. Așa că, în mijlocul unei pandemii mondiale, m-am întrebat cel mai important lucru de până acum: <em>„cum îmi pot conduce viața spre calea pe care vreau cu adevărat să o urmez?"</em>',
+          'Așa am descoperit Terapia de Transformare Rapidă (RTT). Metoda este revoluționară pentru că întrerupe diverse convingeri — RTT demonstrează că schimbarea se poate face altfel, deoarece lucrând direct cu subconștientul, sunt posibile schimbări rapide.'
+        ],
+        cta: 'Lucrați cu Mine'
+      },
+      pricing: {
+        overline: 'Investiție',
+        h2: 'Investiți în Dvs.',
+        intro: 'Fiecare pachet include înregistrarea audio personalizată, un ghid de ascultare de 21 de zile, o verificare după o săptămână și o evaluare după trei săptămâni.',
+        questions: 'Întrebări?'
+      },
+      testimonials: {
+        overline: 'Testimoniale',
+        h2: 'Ce spun clienții'
+      },
+      faq: {
+        overline: 'Întrebările dvs.',
+        h2: 'Întrebări Frecvente',
+        intro: 'Nu sunteți sigur(ă)? Este complet normal. Iată ce întreabă oamenii de obicei înainte de a începe.',
+        items: [
+          { q: 'Ce este hipnoza?', a: 'Hipnoza este o stare naturală a minții, adesea descrisă ca o stare profundă de relaxare și concentrare. În timpul hipnozei nu dormiți și nu sunteți inconștient(ă). Este o stare pozitivă, numită și stare hipnotică sau stare de relaxare creativă.' },
+          { q: 'Cum funcționează hipnoza?', a: 'În timpul ședinței vă ghidez cu blândețe către o stare de relaxare profundă. Odată ce sunteți complet relaxat(ă), ne concentrăm pe ceea ce are nevoie de ajutor. Vă lăsați purtat(ă) de cuvintele și instrucțiunile mele, combinate cu diferite exerciții mentale.' },
+          { q: 'De câte sesiuni am nevoie?', a: 'Pentru nouă din zece clienți, o sesiune RTT este suficientă pentru a face o schimbare durabilă. Unii clienți rezervă o altă sesiune după un timp, pentru că odată ce ați descoperit puterea RTT, doriți să aflați ce altceva este posibil.' },
+          { q: 'Cum diferă RTT de terapia tradițională?', a: 'Terapia tradițională lucrează adesea cu mintea conștientă — discutând aceeași problemă săptămână după săptămână. RTT merge direct la subconștient, unde se află de fapt tiparul. De aceea poate economisi, în multe cazuri, ani de terapie.' },
+          { q: 'RTT se poate face online?', a: 'Complet. Sesiunile online funcționează la fel de bine — și majoritatea clienților preferă să fie în propriul spațiu. Tot ce aveți nevoie este un loc liniștit, o conexiune internet decentă și căști.' }
+        ]
+      },
+      book: {
+        overline: 'Începeți',
+        h2: 'Rezervați un apel gratuit de descoperire',
+        intro: 'Nu sunteți sigur(ă) dacă RTT este potrivit pentru dvs.? Hai să aflăm împreună. O conversație gratuită de 30 de minute — fără angajament, fără presiune.',
+        time: '90–120 minute',
+        timeLabel: 'Per sesiune RTT',
+        emailLabel: 'Contactați-mă',
+        langs: 'RO · EN · FR',
+        langsLabel: 'Sesiuni disponibile în',
+        bookBtn: 'Rezervați Programarea'
+      },
+      footer: {
+        desc: 'Terapeut RTT &amp; Coach. Vă ajut să găsiți ce vă blochează — și să o schimbați. În română, engleză și franceză.',
+        exploreTitle: 'Explorați',
+        exploreLinks: ['Despre RTT', 'Cum ajut', 'Metodă', 'Despre mine', 'Prețuri', 'FAQ'],
+        supportTitle: 'Suport',
+        supportLinks: ['FAQ', 'Politica de Confidențialitate', 'Termeni &amp; Condiții', 'Declinarea responsabilității'],
+        contactTitle: 'Contactați-mă',
+        bookCallBtn: 'Apel Gratuit',
+        copyright: '© 2026 AtDriveYourMind. Toate drepturile rezervate.',
+        member: 'Membră a Asociației Alumni RTT. Asigurată integral.'
+      },
+      cookie: {
+        title: 'Folosim cookie-uri',
+        desc: 'Folosim cookie-uri funcționale, analitice și de urmărire pentru a îmbunătăți experiența dvs. Făcând clic pe <strong>Acceptați</strong>, consimțiți utilizarea cookie-urilor. Citiți <a href="#" style="color:var(--sage);text-decoration:underline">Politica de Confidențialitate</a> pentru detalii.',
+        decline: 'Refuzați',
+        accept: 'Acceptați'
+      }
+    }
+  };
+
+  function set(el, html) { if (el) el.innerHTML = html; }
+  function setText(el, text) { if (el) el.textContent = text; }
+
+  function applyLang(lang) {
+    var t = T[lang];
+    if (!t) return;
+
+    // Update button states
+    document.querySelectorAll('.lang-btn').forEach(function (btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+
+    // Persist & set html lang
+    try { localStorage.setItem('site-lang', lang); } catch (e) {}
+    document.documentElement.lang = lang;
+
+    // ── NAV ──
+    var navLinks = document.querySelectorAll('.nav__links a');
+    t.nav.links.forEach(function (text, i) { setText(navLinks[i], text); });
+    setText(document.querySelector('.btn--nav'), t.nav.bookBtn);
+    // Mobile nav drawer
+    var mobLinks = document.querySelectorAll('#navMobileLinks a');
+    t.nav.links.forEach(function (text, i) { setText(mobLinks[i], text); });
+    var mobBookBtn = document.getElementById('navMobileBookBtn');
+    setText(mobBookBtn, t.nav.bookBtn);
+
+    // ── HERO ──
+    set(document.querySelector('.hero .overline'), t.hero.overline);
+    set(document.querySelector('.hero__sub'), t.hero.sub);
+    set(document.querySelector('.hero__body'), t.hero.body);
+    var heroActions = document.querySelectorAll('.hero__actions .btn');
+    setText(heroActions[0], t.hero.cta1);
+    setText(heroActions[1], t.hero.cta2);
+
+    // ── WHEREVER ──
+    var wt = document.querySelector('.wherever__text');
+    if (wt) {
+      var wtPs = wt.querySelectorAll('p');
+      setText(wtPs[0], t.wherever.overline);
+      set(wt.querySelector('h2'), t.wherever.h2);
+      set(wtPs[1], t.wherever.p1);
+      set(wtPs[2], '<strong>' + t.wherever.howTitle + '</strong>');
+      var wtLis = wt.querySelectorAll('li');
+      t.wherever.steps.forEach(function (step, i) { setText(wtLis[i], step); });
+      set(wtPs[3], t.wherever.p2);
+    }
+
+    // ── POWER OF MIND ──
+    var pw = document.getElementById('power');
+    if (pw) {
+      setText(pw.querySelector('.overline'), t.power.overline);
+      setText(pw.querySelector('h2'), t.power.h2);
+      set(pw.querySelector('.section-intro'), t.power.intro);
+      var pwCards = pw.querySelectorAll('.feature-card');
+      t.power.cards.forEach(function (c, i) {
+        if (!pwCards[i]) return;
+        set(pwCards[i].querySelector('h4'), c.title);
+        set(pwCards[i].querySelector('p'), c.desc);
+      });
+    }
+
+    // ── DISCOVER (WHAT IS RTT) ──
+    var ab = document.getElementById('about');
+    if (ab) {
+      setText(ab.querySelector('.overline'), t.discover.overline);
+      setText(ab.querySelector('h2'), t.discover.h2);
+      set(ab.querySelector('.section-intro'), t.discover.intro);
+      var copyPs = ab.querySelectorAll('.what-is__copy p');
+      t.discover.copy.forEach(function (text, i) { set(copyPs[i], text); });
+      var rttCards = ab.querySelectorAll('.rtt-features-grid .feature-card');
+      t.discover.cards.forEach(function (c, i) {
+        if (!rttCards[i]) return;
+        set(rttCards[i].querySelector('h4'), c.title);
+        set(rttCards[i].querySelector('p'), c.desc);
+      });
+    }
+
+    // ── HELP ──
+    var hp = document.getElementById('help');
+    if (hp) {
+      setText(hp.querySelector('.overline'), t.help.overline);
+      setText(hp.querySelector('h2'), t.help.h2);
+      set(hp.querySelector('.section-intro'), t.help.intro);
+      var helpCards = hp.querySelectorAll('.help-card');
+      t.help.cards.forEach(function (c, i) {
+        if (!helpCards[i]) return;
+        var sc = helpCards[i].querySelector('.help-subcat');
+        set(sc, c.subcat);
+        set(helpCards[i].querySelector('h4'), c.title);
+        set(helpCards[i].querySelector('p'), c.desc);
+      });
+    }
+
+    // ── PROCESS ──
+    var pr = document.getElementById('process');
+    if (pr) {
+      setText(pr.querySelector('.overline'), t.process.overline);
+      setText(pr.querySelector('h2'), t.process.h2);
+      set(pr.querySelector('.section-intro'), t.process.intro);
+      var steps = pr.querySelectorAll('.step');
+      t.process.steps.forEach(function (s, i) {
+        if (!steps[i]) return;
+        setText(steps[i].querySelector('h4'), s.title);
+        setText(steps[i].querySelector('p'), s.desc);
+      });
+    }
+
+    // ── DURING ──
+    var du = document.querySelector('.during');
+    if (du) {
+      setText(du.querySelector('.overline'), t.during.overline);
+      setText(du.querySelector('h2'), t.during.h2);
+      set(du.querySelector('.section-intro'), t.during.intro);
+      var duCards = du.querySelectorAll('.during-card');
+      t.during.cards.forEach(function (c, i) {
+        if (!duCards[i]) return;
+        setText(duCards[i].querySelector('h4'), c.title);
+        set(duCards[i].querySelector('p'), c.desc);
+      });
+    }
+
+    // ── MEET ──
+    var me = document.getElementById('meet');
+    if (me) {
+      var mt = me.querySelector('.meet__text');
+      if (mt) {
+        var mtPs = mt.querySelectorAll('p');
+        setText(mtPs[0], t.meet.overline);
+        setText(mt.querySelector('h2'), t.meet.h2);
+        set(mtPs[1], t.meet.p[0]);
+        set(mtPs[2], t.meet.p[1]);
+        set(mtPs[3], t.meet.p[2]);
+        setText(mt.querySelector('a.btn'), t.meet.cta);
+      }
+    }
+
+    // ── PRICING ──
+    var pi = document.getElementById('pricing');
+    if (pi) {
+      setText(pi.querySelector('.overline'), t.pricing.overline);
+      setText(pi.querySelector('h2'), t.pricing.h2);
+      set(pi.querySelector('.section-intro'), t.pricing.intro);
+      var qEl = pi.querySelector('p[style*="text-align:center"]');
+      if (qEl) {
+        var qLink = qEl.querySelector('a');
+        qEl.innerHTML = t.pricing.questions + ' ' + (qLink ? qLink.outerHTML : '');
+      }
+    }
+
+    // ── TESTIMONIALS ──
+    var te = document.getElementById('testimonials');
+    if (te) {
+      setText(te.querySelector('.overline'), t.testimonials.overline);
+      setText(te.querySelector('h2'), t.testimonials.h2);
+    }
+
+    // ── FAQ ──
+    var fq = document.getElementById('faq');
+    if (fq) {
+      setText(fq.querySelector('.overline'), t.faq.overline);
+      setText(fq.querySelector('h2'), t.faq.h2);
+      set(fq.querySelector('.section-intro'), t.faq.intro);
+      var faqItems = fq.querySelectorAll('.faq-item');
+      t.faq.items.forEach(function (item, i) {
+        if (!faqItems[i]) return;
+        var span = faqItems[i].querySelector('.faq-btn span');
+        var ans = faqItems[i].querySelector('.faq-answer p');
+        setText(span, item.q);
+        set(ans, item.a);
+      });
+    }
+
+    // ── BOOK ──
+    var bk = document.getElementById('book');
+    if (bk) {
+      setText(bk.querySelector('.overline'), t.book.overline);
+      setText(bk.querySelector('h2'), t.book.h2);
+      set(bk.querySelector('.section-intro'), t.book.intro);
+      var bkStrongs = bk.querySelectorAll('strong[style]');
+      if (bkStrongs[0]) setText(bkStrongs[0], t.book.time);
+      if (bkStrongs[2]) setText(bkStrongs[2], t.book.langs);
+      var bkSpans = bk.querySelectorAll('span[style*="text-muted"]');
+      if (bkSpans[0]) setText(bkSpans[0], t.book.timeLabel);
+      if (bkSpans[1]) setText(bkSpans[1], t.book.emailLabel);
+      if (bkSpans[2]) setText(bkSpans[2], t.book.langsLabel);
+      var bkBtn = bk.querySelector('a.btn--primary');
+      if (bkBtn) {
+        var bkIcon = bkBtn.querySelector('i');
+        bkBtn.innerHTML = (bkIcon ? bkIcon.outerHTML : '') + t.book.bookBtn;
+      }
+    }
+
+    // ── FOOTER ──
+    var ft = document.querySelector('.footer__brand > p');
+    set(ft, t.footer.desc);
+    var ftGroups = document.querySelectorAll('.footer__links');
+    if (ftGroups[0]) {
+      setText(ftGroups[0].querySelector('h5'), t.footer.exploreTitle);
+      var exLinks = ftGroups[0].querySelectorAll('a');
+      t.footer.exploreLinks.forEach(function (text, i) { setText(exLinks[i], text); });
+    }
+    if (ftGroups[1]) {
+      setText(ftGroups[1].querySelector('h5'), t.footer.supportTitle);
+      var suLinks = ftGroups[1].querySelectorAll('a');
+      t.footer.supportLinks.forEach(function (text, i) { set(suLinks[i], text); });
+    }
+    var ftContact = document.querySelector('.footer__contact');
+    if (ftContact) {
+      setText(ftContact.querySelector('h5'), t.footer.contactTitle);
+      setText(ftContact.querySelector('a.btn'), t.footer.bookCallBtn);
+    }
+    var ftBottomPs = document.querySelectorAll('.footer__bottom p');
+    setText(ftBottomPs[0], t.footer.copyright);
+    setText(ftBottomPs[1], t.footer.member);
+
+    // ── COOKIE BANNER ──
+    var cb = document.getElementById('cookie-banner');
+    if (cb) {
+      var cbStrong = cb.querySelector('#cookie-text strong[style]');
+      setText(cbStrong, t.cookie.title);
+      var cbDesc = cb.querySelector('#cookie-text p');
+      set(cbDesc, t.cookie.desc);
+      var cbDecline = document.getElementById('cookie-decline');
+      var cbAccept = document.getElementById('cookie-accept');
+      setText(cbDecline, t.cookie.decline);
+      setText(cbAccept, t.cookie.accept);
+    }
+  }
+
+  // Hook up click handlers
+  document.querySelectorAll('.lang-btn').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      applyLang(this.getAttribute('data-lang'));
+    });
+  });
+
+  // Restore saved language on load
+  try {
+    var saved = localStorage.getItem('site-lang');
+    if (saved && T[saved] && saved !== 'en') applyLang(saved);
+  } catch (e) {}
+})();
 </script>
 </body>
 </html>
