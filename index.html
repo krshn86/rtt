@@ -689,7 +689,7 @@ function cookieChoice(accepted){
 </script>
 <div id="cursor-dot"></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // CURSOR
 (function(){
   if(window.matchMedia('(pointer:coarse)').matches) return;
@@ -702,7 +702,6 @@ function cookieChoice(accepted){
     dot.style.left=mx+'px'; dot.style.top=my+'px';
   });
 
-  // smooth ring lag
   (function raf(){
     rx += (mx-rx)*.18;
     ry += (my-ry)*.18;
@@ -718,11 +717,11 @@ function cookieChoice(accepted){
 
   document.addEventListener('mousedown',function(){ring.classList.add('clicking')});
   document.addEventListener('mouseup',  function(){ring.classList.remove('clicking')});
-
   document.addEventListener('mouseleave',function(){ring.style.opacity='0';dot.style.opacity='0'});
   document.addEventListener('mouseenter',function(){ring.style.opacity='1';dot.style.opacity='1'});
 })();
-</script>
+
+// NAV SCROLL
 var nav = document.getElementById('nav');
 window.addEventListener('scroll', function() {
   nav.style.boxShadow = window.scrollY > 20
@@ -741,4 +740,23 @@ revealEls.forEach(function(el) {
         obs.unobserve(e.target);
       }
     });
-  }, { thres
+  }, { threshold: 0.1 }).observe(el);
+});
+
+// FAQ
+document.querySelectorAll('.faq-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    var isOpen = btn.getAttribute('aria-expanded') === 'true';
+    document.querySelectorAll('.faq-btn').forEach(function(b) {
+      b.setAttribute('aria-expanded', 'false');
+      b.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.setAttribute('aria-expanded', 'true');
+      btn.nextElementSibling.classList.add('open');
+    }
+  });
+});
+</script>
+</body>
+</html>
