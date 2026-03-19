@@ -721,7 +721,9 @@ function cookieChoice(accepted){
 <!-- SHARED MODAL OVERLAY -->
 <div id="legal-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title" style="display:none">
   <div id="legal-modal-box">
-    <button id="legal-modal-close" onclick="closeLegalModal()" aria-label="Close">&times;</button>
+    <div id="legal-modal-header">
+      <button id="legal-modal-close" onclick="closeLegalModal()" aria-label="Close">&times;</button>
+    </div>
     <div id="legal-modal-body"></div>
   </div>
 </div>
@@ -847,7 +849,8 @@ function cookieChoice(accepted){
 @keyframes lmFadeIn{from{opacity:0}to{opacity:1}}
 #legal-modal-box{background:var(--white);border-radius:var(--radius);max-width:760px;width:100%;max-height:90vh;overflow-y:auto;padding:clamp(1.5rem,4vw,3rem);position:relative;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:lmSlideUp .3s cubic-bezier(.4,0,.2,1)}
 @keyframes lmSlideUp{from{transform:translateY(24px);opacity:0}to{transform:translateY(0);opacity:1}}
-#legal-modal-close{position:sticky;top:0;float:right;margin-left:1rem;background:var(--off-white);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;font-size:1.2rem;line-height:1;color:var(--charcoal);transition:all .2s;z-index:1;cursor:pointer}
+#legal-modal-header{position:sticky;top:0;background:var(--white);display:flex;justify-content:flex-end;padding-bottom:.5rem;z-index:1;margin-bottom:.25rem}
+#legal-modal-close{background:var(--off-white);border:1px solid var(--border);border-radius:50%;width:36px;height:36px;font-size:1.2rem;line-height:1;color:var(--charcoal);transition:all .2s;cursor:pointer;flex-shrink:0}
 #legal-modal-close:hover{background:var(--charcoal);color:var(--white);border-color:var(--charcoal)}
 #legal-modal-body h3{font-family:var(--font-serif);font-size:1.15rem;font-weight:400;color:var(--charcoal);margin:1.5rem 0 .5rem}
 #legal-modal-body p{font-size:.93rem;color:var(--text);margin-bottom:.85rem}
